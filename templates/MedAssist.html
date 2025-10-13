@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDCO ANALYZER</title>
+        <!-- Import Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <!-- Import Material Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/purani.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+       <style>
+    :root {
+      --primary-blue: #0066cc;
+      --secondary-blue: #4a90e2;
+      --accent-blue: #e3f2fd;
+      --success-green: #10b981;
+      --warning-orange: #f59e0b;
+      --error-red: #ef4444;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --border-color: #e2e8f0;
+      --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.06);
+      --shadow-heavy: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    .dark-theme {
+      --primary-blue: #3b82f6;
+      --secondary-blue: #60a5fa;
+      --accent-blue: #1e3a8a;
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --border-color: #334155;
+      --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.6);
+      --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+      --shadow-heavy: 0 20px 25px rgba(0, 0, 0, 0.4), 0 10px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-x: hidden;
+    }
+
+    .app-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .app-container::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-light);
+    }
+
+    .dark-theme header {
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+   
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.025em;
+    }
+
+    .logo-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 900;
+      margin-right: 700px;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: left;
+      gap: 1.5rem;
+    }
+
+    .control-panel {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 1.25rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: var(--shadow-light);
+    }
+
+    .control-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .control-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .custom-select {
+      position: relative;
+      min-width: 120px;
+    }
+
+    .custom-select select {
+      width: 100%;
+      padding: 0.5rem 2rem 0.5rem 0.75rem;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      appearance: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .custom-select select:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .custom-select::after {
+      content: '▼';
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      pointer-events: none;
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-medium);
+    }
+
+    .theme-toggle:hover {
+      background: var(--secondary-blue);
+      transform: translateY(-1px);
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .chat-workspace {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 2rem;
+      height: calc(100vh - 180px);
+    }
+
+    .chat-main {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-primary);
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-heavy);
+      overflow: hidden;
+    }
+
+    .chat-header {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, var(--accent-blue), rgba(255, 255, 255, 0.8));
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .dark-theme .chat-header {
+      background: linear-gradient(135deg, var(--accent-blue), rgba(30, 58, 138, 0.3));
+    }
+
+    .chat-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .status-online {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success-green);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .status-listening {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning-orange);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      animation: pulse 2s infinite;
+    }
+
+    .status-processing {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--primary-blue);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .status-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .messages-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+      scroll-behavior: smooth;
+    }
+
+    .message {
+      margin-bottom: 1.5rem;
+      animation: messageSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes messageSlide {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .message-user {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      gap: 0.75rem;
+    }
+
+    .message-assistant {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-end;
+      gap: 0.75rem;
+    }
+
+    .message-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      flex-shrink: 0;
+    }
+
+    .avatar-user {
+      background: var(--primary-blue);
+      color: white;
+    }
+
+    .avatar-assistant {
+      background: var(--success-green);
+      color: white;
+    }
+
+    .message-content {
+      max-width: 70%;
+      padding: 1rem 1.25rem;
+      border-radius: 18px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      position: relative;
+      word-wrap: break-word;
+    }
+
+    .message-user .message-content {
+      background: var(--primary-blue);
+      color: white;
+      border-bottom-right-radius: 4px;
+      box-shadow: var(--shadow-medium);
+    }
+
+    .message-assistant .message-content {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      border-bottom-left-radius: 4px;
+      box-shadow: var(--shadow-light);
+    }
+
+    .message-timestamp {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+
+    .sidebar {
+  background: var(--bg-primary);
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-heavy);
+  overflow-y: auto; /* Enable vertical scroll */
+  max-height: 100vh; /* Adjust this value as needed */
+}
+
+
+    .sidebar-section {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sidebar-section:last-child {
+      border-bottom: none;
+    }
+
+    .sidebar-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .voice-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .voice-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: var(--primary-blue);
+      color: white;
+      box-shadow: var(--shadow-medium);
+    }
+
+    .btn-primary:hover {
+      background: var(--secondary-blue);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-heavy);
+    }
+
+    .btn-secondary {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--accent-blue);
+      border-color: var(--primary-blue);
+    }
+
+    .btn-success {
+      background: var(--success-green);
+      color: white;
+      box-shadow: var(--shadow-medium);
+    }
+
+    .btn-success:hover {
+      background: #059669;
+      transform: translateY(-1px);
+    }
+
+    .btn-listening {
+      background: var(--warning-orange);
+      color: white;
+      animation: pulse 2s infinite;
+    }
+
+    .btn-disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat-card {
+      padding: 1rem;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+
+    .quick-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .quick-action {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.875rem;
+    }
+
+    .quick-action:hover {
+      background: var(--accent-blue);
+      border-color: var(--primary-blue);
+    }
+
+    .quick-action-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-blue);
+    }
+
+    .floating-panel {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 400px;
+      max-height: 300px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      box-shadow: var(--shadow-heavy);
+      z-index: 1000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .floating-panel.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .panel-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .panel-close {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+    }
+
+    .panel-close:hover {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .panel-content {
+      padding: 1rem;
+      overflow-y: auto;
+      max-height: 200px;
+    }
+
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-secondary);
+      border-radius: 18px;
+      border-bottom-left-radius: 4px;
+      max-width: 70%;
+      border: 1px solid var(--border-color);
+    }
+
+    .typing-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-secondary);
+      animation: typingDot 1.4s infinite;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typingDot {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-10px); }
+    }
+
+    @media (max-width: 1024px) {
+      .chat-workspace {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .sidebar {
+        order: -1;
+      }
+      
+      .floating-panel {
+        width: calc(100vw - 2rem);
+        right: 1rem;
+        left: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      
+      .header-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .control-panel {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .main-content {
+        padding: 1rem;
+      }
+      
+      .chat-workspace {
+        height: auto;
+        min-height: calc(100vh - 200px);
+      }
+    }
+  </style>
+</head>
+<body class="light-theme">
+  <header class="header">
+            <div class="container">
+                <nav class="navbar">
+              <!-- Hamburger for Mobile -->
+                <div class="hamburger" onclick="toggleMenu()">
+                  <i class="fas fa-bars"></i>
+                </div>
+                    <div class="logo">
+                        <span class="logo-icon"></span>
+                        <p class="medi">
+                            <bold>MEDCO Analyzer</bold>  
+                        </p>
+                    </div>
+                      <div class="nav-links">
+                      <a href="#" onclick="window.location.href='/'" class="nav-link active">Home</a>
+                      <a href="#" onclick="window.location.href='/upload'" class="nav-link active">Prescription Reader</a>
+                       <a href="#" onclick="window.location.href='/MedAssist'" class="nav-link active">MedAssist</a>
+                      <a href="#" onclick="window.location.href='/about'" class="nav-link active">About Us</a>
+                      <a href="#" onclick="window.location.href='/contact'" class="nav-link active">Contact</a>
+                      </div>
+
+                    <span class="sign">
+                     <button class="login-btn" onclick="window.location.href='/signin'">Log In / Sign up</button>
+                     </span>         
+        <div class="profile-container">
+                    <div class="avatar" onclick="toggleProfileDropdown()">
+                        <p class="m">M</p>
+                    </div>
+                
+                    <!-- Profile Dropdown Menu -->
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="profile-header">
+                            <div class="profile-info">
+                                <div class="profile-avatar">R</div>
+                                <div class="profile-details">
+                                    <h3 id="dropdown-user-name">Riti rai</h3>
+                                    <p id="dropdown-user-email">ritirai@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="profile-menu">
+                            <a href="#" class="profile-menu-item" onclick="editProfile()">
+                                <i class="fas fa-edit"></i>
+                                Edit Profile
+                            </a>
+                            <button class="profile-menu-item logout" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+
+    <!-- Profile Modal -->
+    <section id="profile-view" style="display: none;">
+        <div class="profile-modal">
+            <button class="close-profile" onclick="closeProfile()">&times;</button>
+            <h2>My Profile</h2>
+           <form id="edit-profile-form">
+      <p><strong>Name:</strong> <input type="text" id="edit-name" required></p>
+      <p><strong>Email:</strong> <input type="email" id="edit-email" required></p>
+      <p><strong>Password:</strong> <input type="password" id="edit-password" required></p>
+      <button type="submit" class="demo-button">Save Changes</button>
+    </form>
+            
+    </section>
+  <div class="app-container">
+   
+      <div class="header-content">
+        <div class="logo-section">
+          
+          <div class="logo-text">
+            <div class="logo-title">MedAssist Pro</div>
+            <div class="logo-subtitle">AI-Powered Medical Assistant</div>
+          </div>
+        </div>
+        
+        <div class="header-controls">
+          <div class="control-panel">
+            <div class="control-item">
+              <span class="control-label">Language:</span>
+              <div class="custom-select">
+                <select id="languageSelect">
+                  <option value="en-US">English (US)</option>
+                  <option value="en-GB">English (UK)</option>
+                  <option value="es-ES">Español</option>
+                  <option value="fr-FR">Français</option>
+                  <option value="de-DE">Deutsch</option>
+                  <option value="it-IT">Italiano</option>
+                  <option value="pt-PT">Português</option>
+                  <option value="ja-JP">日本語</option>
+                  <option value="ko-KR">한국어</option>
+                  <option value="zh-CN">中文</option>
+                  <option value="hi-IN">हिंदी</option>
+                  <option value="ar-SA">العربية</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <button class="theme-toggle" id="themeToggle">
+            <span id="themeIcon">🌙</span>
+            <span id="themeText">Dark Mode</span>
+          </button>
+        </div>
+      </div>
+
+
+    <div class="main-content">
+      <div class="chat-workspace">
+        <div class="chat-main">
+          <div class="chat-header">
+            <div class="chat-title">Medical Consultation</div>
+            <div class="status-badge status-online" id="statusBadge">
+              <div class="status-indicator"></div>
+              <span>Online</span>
+            </div>
+          </div>
+          
+          <div class="messages-container" id="messagesContainer">
+            <div class="message">
+              <div class="message-assistant">
+                <div class="message-avatar avatar-assistant">🤖</div>
+                <div class="message-content">
+                  Welcome to MedAssist Pro! I'm your AI-powered medical assistant. I can help you with health information, symptom guidance, medication questions, and general medical inquiries. 
+                  <br><br>
+                  <strong>Please note:</strong> I provide general information only and cannot replace professional medical advice. For emergencies, contact emergency services immediately.
+                  <br><br>
+                  Click the microphone to start our conversation, or use the quick actions in the sidebar.
+                </div>
+              </div>
+              <div class="message-timestamp">Just now</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <div class="sidebar-section">
+            <div class="sidebar-title">Voice Controls</div>
+            <div class="voice-controls">
+              <button class="voice-btn btn-primary" id="voiceBtn">
+                <span id="voiceIcon">🎤</span>
+                <span id="voiceText">Start Speaking</span>
+              </button>
+              <button class="voice-btn btn-secondary" id="stopBtn" style="display: none;">
+                <span>⏹️</span>
+                <span>Stop Recording</span>
+              </button>
+              <button class="voice-btn btn-secondary" id="pauseBtn">
+              ⏸️ Pause
+            </button>
+            <button class="voice-btn btn-success" id="resumeBtn">
+              ▶️ Resume
+            </button>
+
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-title">Session Stats</div>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-value" id="messageCount">0</div>
+                <div class="stat-label">Messages</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" id="sessionTime">0:00</div>
+                <div class="stat-label">Duration</div>
+              </div>
+            </div>
+          </div>
+          
+          <label for="language">Language:</label>
+          <select id="language">
+            <option value="english" selected>English</option>
+            <option value="hindi">Hindi</option>
+          </select>
+
+
+          <div class="sidebar-section">
+            <div class="sidebar-title">Quick Actions</div>
+            <div class="quick-actions">
+              <div class="quick-action" onclick="askQuickQuestion('What are the symptoms of flu?')">
+                <div class="quick-action-icon">🤒</div>
+                <span>Flu Symptoms</span>
+              </div>
+              <div class="quick-action" onclick="askQuickQuestion('How to reduce fever?')">
+                <div class="quick-action-icon">🌡️</div>
+                <span>Fever Relief</span>
+              </div>
+              <div class="quick-action" onclick="askQuickQuestion('Common cold treatment')">
+                <div class="quick-action-icon">🤧</div>
+                <span>Cold Treatment</span>
+              </div>
+              <div class="quick-action" onclick="askQuickQuestion('When to see a doctor?')">
+                <div class="quick-action-icon">👨‍⚕️</div>
+                <span>See Doctor</span>
+              </div>
+              <div class="quick-action" id="clearChat">
+                <div class="quick-action-icon">🗑️</div>
+                <span>Clear Chat</span>
+              </div>
+              <div class="quick-action" id="exportChat">
+                <div class="quick-action-icon">📄</div>
+                <span>Export Summary</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="floating-panel" id="summaryPanel">
+      <div class="panel-header">
+        <div class="panel-title">Conversation Summary</div>
+        <button class="panel-close" id="closeSummary">✕</button>
+      </div>
+      <div class="panel-content" id="summaryContent"></div>
+    </div>
+  </div>
+  <footer>
+    <div class="container footer-content">
+        <div class="footer-section">
+        <h3 class="khiska_do01">About  MEDCO Analyzer</h3>
+        <p>
+          <ol class="back">
+            <li>AI powered medical report analysis. </p></li>
+            <li>It is simple, secure, and smart.</li>
+            <li>Understand your health like never before.</li>
+            
+          </ol>
+        </p> 
+        </div>
+        <div class="footer-section">
+        <h3 class="backk">Quick Links</h3>
+        <ul class="footer-links">
+            <li><a href="#" onclick="window.location.href='/'">Upload Report</a></li>
+            <li><a href="#" onclick="window.location.href='/upload'">Prescription Reader</a></li>
+            <li><a href="#" onclick="window.location.href='/MedAssist'">MedAssist</a></li>
+            <li><a href="#" onclick="window.location.href='/about'">Profile</a></li>
+        </ul>
+        </div>
+            <div class="footer-section">
+        <h3 class="bacck">Contact</h3>
+        <ul class="footer-links">
+            <li>Email: <a href="mailto:support@medscan.ai">support@medscan.ai</a></li>
+            <li>Phone: <a href="tel:+91-9368686513">+91-9005529331</a></li>
+        </ul>
+        </div>
+    </div>
+    <div class="copyright">
+        © 2025 MEDCO Analyzer. All rights reserved.
+    </div>
+
+
+    </footer>
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+  <script>
+class MedAssistPro {
+  constructor() {
+    this.messagesContainer = document.getElementById('messagesContainer');
+    this.voiceBtn = document.getElementById('voiceBtn');
+    this.stopBtn = document.getElementById('stopBtn');
+    this.statusBadge = document.getElementById('statusBadge');
+    this.languageSelect = document.getElementById('languageSelect');
+    this.messageCount = document.getElementById('messageCount');
+    this.sessionTime = document.getElementById('sessionTime');
+    this.summaryContent = document.getElementById('summaryContent');
+    this.themeToggle = document.getElementById('themeToggle');
+
+    this.conversationHistory = [];
+    this.currentLanguage = 'en-US';
+    this.isListening = false;
+    this.sessionStartTime = Date.now();
+    this.messageCounter = 0;
+
+    this.initializeSpeechRecognition();
+    this.bindEvents();
+    this.startSessionTimer();
+    this.loadWelcome();
+  }
+
+  initializeSpeechRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech recognition not supported!");
+      return;
+    }
+
+    this.recognition = new SpeechRecognition();
+    this.recognition.lang = this.currentLanguage;
+    this.recognition.continuous = false;
+    this.recognition.interimResults = false;
+
+    this.recognition.onstart = () => this.updateListening(true);
+    this.recognition.onresult = (event) => this.handleTranscript(event.results[0][0].transcript);
+    this.recognition.onend = () => this.updateListening(false);
+    this.recognition.onerror = (event) => this.addAssistantMessage("❗ " + event.error);
+  }
+
+  bindEvents() {
+    this.voiceBtn.onclick = () => this.recognition.start();
+    this.stopBtn.onclick = () => this.recognition.stop();
+    this.languageSelect.onchange = e => this.recognition.lang = this.currentLanguage = e.target.value;
+    this.themeToggle.onclick = () => this.toggleTheme();
+    document.getElementById('pauseBtn').onclick = () => window.speechSynthesis.pause();
+    document.getElementById('resumeBtn').onclick = () => window.speechSynthesis.resume();
+  }
+
+  updateListening(isListening) {
+    this.isListening = isListening;
+    this.voiceBtn.style.display = isListening ? 'none' : 'inline-block';
+    this.stopBtn.style.display = isListening ? 'inline-block' : 'none';
+    this.statusBadge.className = `status-badge ${isListening ? 'status-listening' : 'status-online'}`;
+    this.statusBadge.innerHTML = `<div class="status-indicator"></div><span>${isListening ? 'Listening...' : 'Online'}</span>`;
+  }
+
+  startSessionTimer() {
+    setInterval(() => {
+      const elapsed = Math.floor((Date.now() - this.sessionStartTime) / 1000);
+      const min = Math.floor(elapsed / 60);
+      const sec = (elapsed % 60).toString().padStart(2, '0');
+      this.sessionTime.textContent = `${min}:${sec}`;
+    }, 1000);
+  }
+
+  loadWelcome() {
+    this.addAssistantMessage("Welcome! Ask me a medical question by voice or quick action.");
+  }
+
+  handleTranscript(text) {
+    this.addUserMessage(text);
+    this.fetchAnswerFromAPI(text);
+  }
+
+  async fetchAnswerFromAPI(query) {
+  this.addAssistantMessage("🧠 Thinking...");
+
+  const language = document.getElementById("language").value; // "english" or "hindi"
+
+  try {
+    const res = await fetch("/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query, language })
+    });
+
+    const data = await res.json();
+    const answer = data.answer || "⚠️ No answer received.";
+    this.addAssistantMessage(answer);
+    this.speakText(answer, language);  // Pass selected language
+  } catch (err) {
+    this.addAssistantMessage("❗ Failed to contact server.");
+  }
+}
+speakText(text, language) {
+  if (!window.speechSynthesis) return;
+
+  // Remove emojis and special symbols before speaking
+  const cleanText = text.replace(/[\u{1F600}-\u{1F64F}|\u{1F300}-\u{1F5FF}|\u{1F680}-\u{1F6FF}|\u{2600}-\u{26FF}|\u{2700}-\u{27BF}]/gu, "");
+
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+
+  // Choose voice language
+  if (language === "hindi") {
+    utterance.lang = "hi-IN";  // Hindi voice
+  } else {
+    utterance.lang = "en-US";  // English voice
+  }
+
+  utterance.rate = 1;
+  utterance.pitch = 1;
+
+  // Optional: Use a specific voice if available
+  const voices = window.speechSynthesis.getVoices();
+  const selectedVoice = voices.find(v =>
+    language === "hindi" ? v.lang.includes("hi") : v.lang.includes("en")
+  );
+  if (selectedVoice) {
+    utterance.voice = selectedVoice;
+  }
+
+  window.speechSynthesis.cancel(); // Cancel any previous speech
+  window.speechSynthesis.speak(utterance);
+}
+
+  addUserMessage(text) {
+    this.addMessage(text, 'user', '👤');
+  }
+
+  addAssistantMessage(text) {
+    this.addMessage(text, 'assistant', '🤖');
+  }
+
+  addMessage(text, type, icon) {
+    const msg = document.createElement('div');
+    msg.className = 'message';
+    msg.innerHTML = `
+      <div class="message-${type}">
+        <div class="message-avatar ${type === 'user' ? 'avatar-user' : 'avatar-assistant'}">${icon}</div>
+        <div class="message-content">${this.convertToHTML(text)}</div>
+      </div>
+      <div class="message-timestamp">${new Date().toLocaleTimeString()}</div>
+    `;
+    this.messagesContainer.appendChild(msg);
+    this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+    this.messageCounter++;
+    this.messageCount.textContent = this.messageCounter;
+    this.conversationHistory.push(text);
+  }
+
+  convertToHTML(text) {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      .replace(/- /g, "<li>")
+      .replace(/\n/g, "<br>");
+  }
+
+  toggleTheme() {
+    document.body.classList.toggle('dark-theme');
+  }
+}
+
+// Support quick action buttons
+function askQuickQuestion(question) {
+  if (window.medAssistApp) {
+    window.medAssistApp.addUserMessage(question);
+    window.medAssistApp.fetchAnswerFromAPI(question);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  window.medAssistApp = new MedAssistPro();
+});
+</script>
+</main>
+</html>

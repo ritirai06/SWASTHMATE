@@ -1,7 +1,4 @@
 import json
-from diagn import enhanced_diagnosis, summarize_diagnosis, get_icd10_code
-from nlp import analyze_medical_report
-
 # Assumes the full symptoms_recommendations dictionary is already defined above.
 symptoms_recommendations = {
     "Fever": [
@@ -545,7 +542,7 @@ symptoms_recommendations = {
         "Maintain physical activity and stress relief.",
         "Surgical options may be needed for severe cases."
     ],
-    "Anemia": [
+    "anemia": [
         "Consume iron-rich foods like meat, legumes, spinach.",
         "Take iron supplements as advised (on empty stomach).",
         "Avoid tea/coffee near mealtime to enhance iron absorption.",
@@ -1105,13 +1102,13 @@ symptoms_recommendations = {
 def generate_recommendations(diseases: list) -> dict:
     results = {}
     for item in diseases:
-        disease_input = item["disease"].strip().lower()
+        disease_input = item["text"].strip().lower()
         match = next(
             (key for key in symptoms_recommendations.keys() if key.lower() == disease_input),
             None
         )
         recommendations = symptoms_recommendations.get(match, ["Consult a specialist for personalized guidance."])
-        results[item["disease"]] = recommendations
+        results[item["text"]] = recommendations
     return results
 
 def advanced_report(text):
@@ -1133,11 +1130,3 @@ def advanced_report(text):
 
     return recommendations
 
-# Example test
-if __name__ == "__main__":
-    report_text = """
-    The patient complains of chronic fatigue, nausea, and occasional vomiting.
-    History includes type 2 diabetes, hypertension, and anemia. 
-    Denies any cancer. BP is 138/88 mmHg. HbA1c is 8.1%.
-    """
-    advanced_report(report_text)

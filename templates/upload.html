@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#667eea">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes">
+    <title>Upload Prescription</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/purani.css') }}">
+    <style>
+        
+         .swaraj {
+            max-width: 1200px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .comfort {
+            background: linear-gradient(135deg, #1d4ed8 0%, #254aee 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .comfort h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .comfort p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-comfort {
+            padding: 40px;
+        }
+
+        .up-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 2px dashed #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        .up-section:hover {
+            border-color: #2f4eda;
+            background: #f1f3f4;
+        }
+
+        .up-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 30px auto;
+            max-width: 600px;
+        }
+
+        .b {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            min-width: 180px;
+        }
+
+        .b::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(41, 28, 227, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .b:hover::before {
+            left: 100%;
+        }
+
+        .b-primary {
+            background: linear-gradient(135deg, #1c39bb 0%, #d1ccd6 100%);
+            color: white;
+        }
+
+        .b-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(37, 74, 238, 0.3);
+        }
+
+        .b-secondary {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1d4ed8 100%);
+            color: white;
+        }
+
+        .b-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px #1d4ed8;
+        }
+
+        .b:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .preview-section {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .image-preview {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .preview-img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .video-container {
+            position: relative;
+            display: none;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #camera-stream {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .capture-b {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .capture-b:hover {
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .close-camera-b {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .close-camera-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
+        }
+
+        .results-section {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border: 2px solid #e9ecef;
+        }
+
+        .results-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .results-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .extracted-text {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .confidence-score {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .medical-entities {
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .entity-group {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+
+        .entity-type {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .entity-values {
+            color: #495057;
+            font-style: italic;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .drag-drop-area {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            background: #fafafa;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .drag-drop-area.dragover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .error-message {
+            background: #ffe6e6;
+            color: #d63031;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #d63031;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 15px;
+                margin: 0;
+            }
+
+            .header {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .upload-section {
+                padding: 20px 15px;
+                margin-bottom: 20px;
+            }
+
+            .upload-section h2 {
+                font-size: 1.3rem;
+                margin-bottom: 10px;
+            }
+
+            .upload-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+                margin-top: 20px;
+                max-width: 100%;
+            }
+
+            .b {
+                width: 100%;
+                max-width: 280px;
+                padding: 18px 25px;
+                font-size: 1rem;
+                min-width: auto;
+            }
+
+            .drag-drop-area {
+                padding: 25px 15px;
+                margin: 15px 0;
+            }
+
+            .drag-drop-area p {
+                font-size: 0.9rem;
+            }
+
+            .video-container {
+                margin: 0 -15px;
+                border-radius: 0;
+            }
+
+            #camera-stream {
+                width: 100%;
+                height: auto;
+                border-radius: 0;
+                max-height: 60vh;
+                object-fit: cover;
+            }
+
+            .capture-b {
+                width: 60px;
+                height: 60px;
+                bottom: 15px;
+                font-size: 1.3rem;
+            }
+
+            .close-camera-b {
+                width: 45px;
+                height: 45px;
+                top: 15px;
+                right: 15px;
+                font-size: 1.1rem;
+            }
+
+            .preview-img {
+                max-height: 300px;
+                margin: 0 -15px 20px -15px;
+                border-radius: 0;
+                width: calc(100% + 30px);
+            }
+
+            .image-preview div {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                padding: 0 15px;
+            }
+
+            .results-section {
+                padding: 20px 15px;
+                margin-top: 20px;
+            }
+
+            .results-box {
+                padding: 15px;
+                margin-top: 15px;
+            }
+
+            .results-header {
+                padding: 12px 15px;
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+
+            .results-section h3 {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+
+            .extracted-text {
+                padding: 15px;
+                font-size: 0.9rem;
+                max-height: 200px;
+                overflow-y: auto;
+            }
+
+            .confidence-score {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+            }
+
+            .loading p {
+                font-size: 0.9rem;
+            }
+
+            .spinner {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 15px;
+            }
+
+            .error-message {
+                padding: 12px;
+                font-size: 0.9rem;
+                margin: 15px -15px;
+                border-radius: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .header p {
+                font-size: 0.9rem;
+            }
+
+            .main-content {
+                padding: 15px 10px;
+            }
+
+            .upload-section {
+                padding: 15px 10px;
+            }
+
+            .upload-section h2 {
+                font-size: 1.1rem;
+            }
+
+            .btn {
+                padding: 16px 20px;
+                font-size: 0.95rem;
+                max-width: 100%;
+            }
+
+            .drag-drop-area {
+                padding: 20px 10px;
+            }
+
+            .drag-drop-area p {
+                font-size: 0.85rem;
+            }
+
+            #camera-stream {
+                max-height: 50vh;
+            }
+
+            .capture-b {
+                width: 55px;
+                height: 55px;
+                font-size: 1.2rem;
+            }
+
+            .close-camera-b {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .preview-img {
+                max-height: 250px;
+            }
+
+            .results-section {
+                padding: 15px 10px;
+            }
+
+            .results-box {
+                padding: 12px;
+            }
+
+            .extracted-text {
+                padding: 12px;
+                font-size: 0.85rem;
+                max-height: 150px;
+            }
+
+            .confidence-score {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Landscape orientation for mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            #camera-stream {
+                max-height: 70vh;
+            }
+
+            .preview-img {
+                max-height: 250px;
+            }
+        }
+
+        /* Touch-friendly adjustments */
+        @media (pointer: coarse) {
+            .btn {
+                min-height: 48px;
+                touch-action: manipulation;
+            }
+
+            .capture-btn {
+                min-width: 60px;
+                min-height: 60px;
+                touch-action: manipulation;
+            }
+
+            .close-camera-btn {
+                min-width: 45px;
+                min-height: 45px;
+                touch-action: manipulation;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+            <div class="container">
+                <nav class="navbar">
+                    <!-- Hamburger for Mobile -->
+                <div class="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+                </div>
+                    <div class="logo">
+                        <span class="logo-icon"></span>
+                        <p class="medi">
+                            <bold>MEDCO Analyzer</bold>
+                        </p>
+                    </div>
+                        <div class="nav-links">
+                        <a href="#" onclick="window.location.href='/'" class="nav-link active">Home</a>
+                        <a href="#" onclick="window.location.href='/upload'" class="nav-link active">Prescription Reader</a>
+                            <a href="#" onclick="window.location.href='/MedAssist'" class="nav-link active">MedAssist</a>
+                        <a href="#" onclick="window.location.href='/about'" class="nav-link active">About Us</a>
+                        <a href="#" onclick="window.location.href='/contact'" class="nav-link active">Contact</a>
+                        </div>
+
+                        <span class="sign">
+                        <button class="login-btn" onclick="window.location.href='/signin'">Log In / Sign up</button>
+                        </span>
+        <div class="profile-container">
+                    <div class="avatar" onclick="toggleProfileDropdown()">
+                        <p class="m">M</p>
+                    </div>
+                
+                    <!-- Profile Dropdown Menu -->
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="profile-header">
+                            <div class="profile-info">
+                                <div class="profile-avatar">R</div>
+                                <div class="profile-details">
+                                    <h3 id="dropdown-user-name">Riti rai</h3>
+                                    <p id="dropdown-user-email">ritirai@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="profile-menu">
+                            <a href="#" class="profile-menu-item" onclick="editProfile()">
+                                <i class="fas fa-edit"></i>
+                                Edit Profile
+                            </a>
+                            <button class="profile-menu-item logout" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+
+    <!-- Profile Modal -->
+    <section id="profile-view" style="display: none;">
+        <div class="profile-modal">
+            <button class="close-profile" onclick="closeProfile()">&times;</button>
+            <h2>My Profile</h2>
+           <form id="edit-profile-form">
+    <p><strong>Name:</strong> <input type="text" id="edit-name" required></p>
+    <p><strong>Email:</strong> <input type="email" id="edit-email" required></p>
+    <p><strong>Password:</strong> <input type="password" id="edit-password" required></p>
+    <button type="submit" class="demo-button">Save Changes</button>
+    </form>
+            
+    </section>
+
+<div class="swaraj">
+    <div class="comfort">
+        <h1>🔬 Prescription Reader</h1>
+        <p>Capture or upload a prescription to extract text and analyze medical entities.</p>
+    </div>
+
+    <div class="main-comfort">
+        <div class="up-section">
+            <div class="up-buttons">
+                <button class="b b-primary" id="cameraBtn">📸 Open Camera</button>
+                <button class="b b-secondary" id="uploadBtn">📂 Upload Image</button>
+            </div>
+            <input type="file" id="fileInput" accept="image/*" class="file-input">
+        </div>
+
+        <div class="video-container" id="videoContainer">
+            <video id="camera-stream" autoplay playsinline></video>
+            <button class="capture-b" id="captureBtn">📷</button>
+            <button class="close-camera-b" id="closeCameraBtn">❌</button>
+        </div>
+
+        <div id="previewSection" class="preview-section">
+            <div class="image-preview">
+                <img id="preview-img" class="preview-img" />
+                <div>
+                    <button class="b b-primary" id="processBtn">🔍 Extract Text</button>
+                    <button class="b b-secondary" id="retakeBtn">🔄 Retake</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="resultsSection" class="results-section" style="display: none;">
+            <div class="results-header">
+                📋 Analysis Report
+            </div>
+            
+            <div id="loadingIndicator" class="loading">
+                <div class="spinner"></div>
+                <p>⏳ Processing your prescription...</p>
+            </div>
+            
+            <div id="extractedResults" class="results-box" style="display: none;">
+                <h3>📄 Extracted Text</h3>
+                <div id="confidenceScore" class="confidence-score"></div>
+                <div id="extractedText" class="extracted-text"></div>
+                <button class="btn btn-secondary" id="copyBtn">📋 Copy Text</button>
+                
+                <div class="medical-entities">
+                    <h3>🧬 Medical Entities Detected</h3>
+                    <div id="entityList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="container footer-content">
+        <div class="footer-section">
+        <h3 class="khiska_do01">About  MEDCO Analyzer</h3>
+        <p>
+        <ol class="back">
+            <li>AI powered medical report analysis. </p></li>
+            <li>It is simple, secure, and smart.</li>
+            <li>Understand your health like never before.</li>
+            
+        </ol>
+        </p> 
+        </div>
+        <div class="footer-section">
+        <h3 class="backk">Quick Links</h3>
+        <ul class="footer-links">
+            <li><a href="#" onclick="window.location.href='/'">Upload Report</a></li>
+            <li><a href="#" onclick="window.location.href='/upload'">Prescription Reader</a></li>
+            <li><a href="#" onclick="window.location.href='/MedAssist'">MedAssist</a></li>
+            <li><a href="#" onclick="window.location.href='/about'">Profile</a></li>
+        </ul>
+        </div>
+            <div class="footer-section">
+        <h3 class="bacck">Contact</h3>
+        <ul class="footer-links">
+            <li>Email: <a href="mailto:support@medscan.ai">support@medscan.ai</a></li>
+            <li>Phone: <a href="tel:+91-9368686513">+91-9005529331</a></li>
+        </ul>
+        </div>
+    </div>
+    <div class="copyright">
+        © 2025 MEDCO Analyzer. All rights reserved.
+    </div>
+    
+    </footer>
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+<script>
+    class PrescriptionReader {
+        constructor() {
+            this.currentStream = null;
+            this.capturedImage = null;
+            this.initializeElements();
+            this.setupEventListeners();
+        }
+
+        initializeElements() {
+            this.elements = {
+                cameraBtn: document.getElementById('cameraBtn'),
+                uploadBtn: document.getElementById('uploadBtn'),
+                fileInput: document.getElementById('fileInput'),
+                videoContainer: document.getElementById('videoContainer'),
+                cameraStream: document.getElementById('camera-stream'),
+                captureBtn: document.getElementById('captureBtn'),
+                closeCameraBtn: document.getElementById('closeCameraBtn'),
+                previewSection: document.getElementById('previewSection'),
+                previewImg: document.getElementById('preview-img'),
+                processBtn: document.getElementById('processBtn'),
+                retakeBtn: document.getElementById('retakeBtn'),
+                resultsSection: document.getElementById('resultsSection'),
+                loadingIndicator: document.getElementById('loadingIndicator'),
+                extractedResults: document.getElementById('extractedResults'),
+                extractedText: document.getElementById('extractedText'),
+                confidenceScore: document.getElementById('confidenceScore'),
+                copyBtn: document.getElementById('copyBtn'),
+                dragDropArea: document.getElementById('dragDropArea'),
+                progressFill: document.getElementById('progressFill')
+            };
+        }
+
+        setupEventListeners() {
+            this.elements.cameraBtn.addEventListener('click', () => {
+            const user = JSON.parse(localStorage.getItem('userData'));
+            if (user && user.loggedIn) {
+            this.openCamera();
+            } else {
+            alert('Please log in to use the camera.');
+            window.location.href = '/signin';
+            }
+            });
+
+            this.elements.uploadBtn.addEventListener('click', () => {
+            const user = JSON.parse(localStorage.getItem('userData'));
+            if (user && user.loggedIn) {
+                    this.elements.fileInput.click();
+                        } else {
+                    alert('Please log in to upload a prescription.');
+                window.location.href = '/signin';
+                    }
+            });
+
+            this.elements.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
+            this.elements.captureBtn.addEventListener('click', () => this.captureImage());
+            this.elements.closeCameraBtn.addEventListener('click', () => this.stopCamera());
+            this.elements.processBtn.addEventListener('click', () => this.processImage());
+            this.elements.retakeBtn.addEventListener('click', () => this.resetCapture());
+            this.elements.copyBtn.addEventListener('click', () => this.copyText());
+
+            this.elements.dragDropArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                this.elements.dragDropArea.classList.add('dragover');
+            });
+
+            this.elements.dragDropArea.addEventListener('dragleave', () => {
+                this.elements.dragDropArea.classList.remove('dragover');
+            });
+
+            this.elements.dragDropArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                this.elements.dragDropArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    this.handleFile(files[0]);
+                }
+            });
+        }
+
+        async openCamera() {
+            try {
+                const constraints = { video: { facingMode: 'environment' } };
+                this.currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+                this.elements.cameraStream.srcObject = this.currentStream;
+                this.elements.videoContainer.style.display = 'block';
+                this.elements.cameraBtn.disabled = true;
+            } catch (error) {
+                this.showError('Camera access failed.');
+            }
+        }
+
+        captureImage() {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            const video = this.elements.cameraStream;
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0);
+
+            canvas.toBlob((blob) => {
+                this.handleFile(blob);
+                this.stopCamera();
+            }, 'image/jpeg', 0.9);
+        }
+
+        stopCamera() {
+            if (this.currentStream) {
+                this.currentStream.getTracks().forEach(track => track.stop());
+                this.currentStream = null;
+            }
+            this.elements.videoContainer.style.display = 'none';
+            this.elements.cameraBtn.disabled = false;
+        }
+
+        handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                this.handleFile(file);
+            }
+        }
+
+        handleFile(file) {
+            if (!(file.type?.startsWith('image/') || file instanceof Blob)) {
+                this.showError('Please select a valid image file.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.capturedImage = e.target.result;
+                this.elements.previewImg.src = this.capturedImage;
+                this.elements.previewSection.style.display = 'block';
+                this.elements.resultsSection.style.display = 'none';
+                this.elements.extractedResults.innerHTML = ''; // clear old result
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async processImage() {
+            if (!this.capturedImage) {
+                this.showError('No image selected.');
+                return;
+            }
+
+            this.elements.resultsSection.style.display = 'block';
+            this.elements.loadingIndicator.style.display = 'block';
+            this.elements.extractedResults.style.display = 'none';
+            this.elements.processBtn.disabled = true;
+
+            try {
+                const blob = await (await fetch(this.capturedImage)).blob();
+                const formData = new FormData();
+                formData.append('image', blob, 'image.jpg');
+
+                const response = await fetch('/upload_image', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+
+                
+                // inside processImage() after getting result
+                this.displayResults(result.text, 80);
+                if (result.summary) {
+                    this.displaySummary(result.summary);
+}
+
+
+            } catch (error) {
+                this.showError(error.message);
+            } finally {
+                this.elements.processBtn.disabled = false;
+            }
+        }
+
+        displayResults(text, confidence) {
+            this.elements.loadingIndicator.style.display = 'none';
+            this.elements.extractedResults.style.display = 'block';
+
+            const cleanedText = text.trim() || 'No text extracted.';
+            this.elements.extractedText.textContent = cleanedText;
+
+            const confidencePercentage = Math.round(confidence);
+            const color = confidencePercentage > 70 ? '#27ae60' :
+                        confidencePercentage > 50 ? '#f39c12' : '#e74c3c';
+
+            this.elements.confidenceScore.textContent = `Confidence: ${confidencePercentage}%`;
+            this.elements.confidenceScore.style.background = `linear-gradient(135deg, ${color}, ${color}dd)`;
+        }
+
+        displayEntities(entities) {
+    const container = document.createElement('div');
+    container.innerHTML = '<h4>🧬 NLP Extracted Medical Info:</h4>';
+    container.style.marginTop = '20px';
+
+    if (!entities || entities.length === 0) {
+        const none = document.createElement('p');
+        none.textContent = 'No medical entities detected.';
+        container.appendChild(none);
+        this.elements.extractedResults.appendChild(container);
+        return;
+    }
+
+    const grouped = {};
+
+    entities.forEach(ent => {
+        const type = ent.Type.toUpperCase();
+        if (!grouped[type]) grouped[type] = new Set();
+        grouped[type].add(ent.Text);
+    });
+
+    const typeLabels = {
+        PROTECTED_HEALTH_INFORMATION: "👤 Patient Information",
+        ANATOMY: "🧍‍♂️ Anatomical Areas",
+        MEDICAL_CONDITION: "🩺 Medical Conditions & Symptoms",
+        TIME_EXPRESSION: "🕒 Timeline",
+        TEST_TREATMENT_PROCEDURE: "🧪 Tests / Treatments",
+        MEDICATION: "💊 Medications"
+    };
+
+    for (const [type, texts] of Object.entries(grouped)) {
+        const section = document.createElement('div');
+        section.className = "entity-group";
+
+        const label = document.createElement('div');
+        label.className = "entity-type";
+        label.textContent = typeLabels[type] || type;
+
+        const values = document.createElement('div');
+        values.className = "entity-values";
+        values.textContent = Array.from(texts).join(', ');
+
+        section.appendChild(label);
+        section.appendChild(values);
+        container.appendChild(section);
+    }
+
+    this.elements.extractedResults.appendChild(container);
+}
+        
+
+        displaySummary(summary) {
+    const box = document.createElement('div');
+    box.className = 'results-box';
+    box.innerHTML = `
+    <div class="entity-group">
+        <div class="entity-type">👤 Patient Information</div>
+        <div class="entity-values">
+            ${summary["Patient Information"].Name ? `Name: ${summary["Patient Information"].Name}<br>` : ''}
+            ${summary["Patient Information"]["Age/Gender"] ? `Age/Gender: ${summary["Patient Information"]["Age/Gender"]}<br>` : ''}
+            ${summary["Patient Information"].Doctor ? `Doctor: ${summary["Patient Information"].Doctor}<br>` : ''}
+            ${summary["Patient Information"]["Hospital/Clinic"] ? `Hospital: ${summary["Patient Information"]["Hospital/Clinic"]}<br>` : ''}
+            ${summary["Patient Information"].Date ? `Date: ${summary["Patient Information"].Date}<br>` : ''}
+        </div>
+      </div>
+
+      <div class="entity-group">
+        <div class="entity-type">🩺 Medical Conditions</div>
+        <div class="entity-values">
+          ${(summary["Medical Conditions"] || []).join('<br>') || '—'}
+        </div>
+      </div>
+
+      <div class="entity-group">
+        <div class="entity-type">💊 Medications</div>
+        <div class="entity-values">
+          ${(summary["Medications"] || []).map(m => {
+            const parts = [m.name];
+            if (m.purpose) parts.push(m.purpose);
+            if (m.generic) parts.push(`(${m.generic})`);
+            return parts.join(' ');
+          }).join('<br>') || '—'}
+        </div>
+      </div>
+
+      <div class="entity-group">
+        <div class="entity-type">🧪 Tests / Procedures</div>
+        <div class="entity-values">
+          ${(summary["Tests / Procedures"] || []).join('<br>') || '—'}
+        </div>
+      </div>
+
+      <div class="entity-group">
+        <div class="entity-type">👨‍⚕️ Suggested Specialists</div>
+        <div class="entity-values">
+          ${(summary["Suggested Specialists"] || []).join('<br>') || '—'}
+        </div>
+      </div>
+
+    <div class="entity-group">
+        <div class="entity-type">✅ Recommendations</div>
+        <div class="entity-values">
+        <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+            ${(summary["Recommendations"] || []).map(r => `<li>${r}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+    `;
+    this.elements.extractedResults.appendChild(box);
+}
+
+
+        resetCapture() {
+            this.stopCamera();
+            this.capturedImage = null;
+            this.elements.previewSection.style.display = 'none';
+            this.elements.resultsSection.style.display = 'none';
+            this.elements.fileInput.value = '';
+            this.elements.progressFill.style.width = '0%';
+        }
+
+        copyText() {
+            const text = this.elements.extractedText.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const original = this.elements.copyBtn.textContent;
+                this.elements.copyBtn.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    this.elements.copyBtn.textContent = original;
+                }, 2000);
+            });
+        }
+
+        showError(message) {
+            const existing = document.querySelector('.error-message');
+            if (existing) existing.remove();
+
+            const div = document.createElement('div');
+            div.className = 'error-message';
+            div.textContent = message;
+
+            this.elements.resultsSection.style.display = 'block';
+            this.elements.resultsSection.insertBefore(div, this.elements.resultsSection.firstChild);
+
+            setTimeout(() => div.remove(), 5000);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        new PrescriptionReader();
+    });
+</script>
+</body>
+</html>

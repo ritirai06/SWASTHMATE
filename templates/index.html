@@ -16,23 +16,27 @@
         <header class="header">
             <div class="container">
                 <nav class="navbar">
+                    <!-- Hamburger for Mobile -->
+                    <div class="hamburger" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                    </div>
                     <div class="logo">
                         <span class="logo-icon"></span>
                         <p class="medi">
                             <bold>MEDCO Analyzer</bold>  
                         </p>
                     </div>
-                    <div class="nav-links">
-                      <a href="#" class="nav-link active" onclick="activateView('upload-view')">Home</a>
-                      <a href="#" class="nav-link active" onclick="activateView('about-view')">About Us</a>
-                      <a href="#" class="nav-link active" onclick="activateView('analysis-view')">Analysis</a>
-                      <a href="#" class="nav-link active" onclick="activateView('history-view')">History</a>
-                      <a href="#" class="nav-link active" onclick="activateView('contact-view')">Contact </a>
-                       
-                    </div>
+                      <div class="nav-links">
+                      <a href="#" onclick="window.location.href='/'" class="nav-link active">Home</a>
+                      <a href="#" onclick="window.location.href='/upload'" class="nav-link active">Prescription Reader</a>
+                      <a href="#" onclick="window.location.href='/MedAssist'" class="nav-link active">MedAssist</a>
+                      <a href="#" onclick="window.location.href='/about'" class="nav-link active">About Us</a>
+                      <a href="#" onclick="window.location.href='/contact'" class="nav-link active">Contact</a>
+                      </div>
+
                     <span class="sign">
-                      <a href="signin.html" class="login-btn">Log In / Sign up</a>
-                     </span>         
+                     <button class="login-btn" onclick="window.location.href='/signin'">Log In / Sign up</button>
+                     </span>
         <div class="profile-container">
                     <div class="avatar" onclick="toggleProfileDropdown()">
                         <p class="m">M</p>
@@ -65,22 +69,20 @@
             </nav>
         </div>
     </header>
+    
 
     <!-- Profile Modal -->
-    <section id="profile-view">
+    <section id="profile-view" style="display: none;">
         <div class="profile-modal">
             <button class="close-profile" onclick="closeProfile()">&times;</button>
             <h2>My Profile</h2>
-            <div id="user-info">
-                <p><strong>Name:</strong> <span id="user-name">Riti Rai</span></p>
-                <p><strong>Email:</strong> <span id="user-email">ritirai@example.com</span></p>
-                <p><strong>Age:</strong> <span id="user-age">25</span></p>
-                <p><strong>Gender:</strong> <span id="user-gender">Female</span></p>
-                <p><strong>Phone:</strong> <span id="user-phone">+91-9876543210</span></p>
-                <p><strong>Address:</strong> <span id="user-address">123 Medical Street, Health City</span></p>
-            </div>
-            <button id="logout-button" class="demo-button" onclick="logout()">Logout</button>
-        </div>
+           <form id="edit-profile-form">
+      <p><strong>Name:</strong> <input type="text" id="edit-name" required></p>
+      <p><strong>Email:</strong> <input type="email" id="edit-email" required></p>
+      <p><strong>Password:</strong> <input type="password" id="edit-password" required></p>
+      <button type="submit" class="demo-button">Save Changes</button>
+    </form>
+            
     </section>
 
  <main class="container">
@@ -137,6 +139,27 @@
                 </div>
                 
             </div>
+            <div id="analysis-view" class="center-box" style="display: none;">
+            <h2>📊 Analysis Summary</h2>
+            <div id="analysis-content" class="card result-card"></div>
+            <div class="btn-area">
+                <button id="view-report-btn" class="btn btn-secondary">View Full Report</button>
+            </div>
+            </div>
+
+            <div id="diagnosis-view" class="center-box" style="display: none;">
+                <h2>🧾 Full Diagnosis Report</h2>
+            <div id="diagnosis-content" class="card report-card"></div>
+            <div class="btn-area">
+                <button id="print-btn" class="btn btn-success">🖨️ Print</button>
+                <button id="back-btn" class="btn btn-outline-primary">⬅ Back</button>
+            </div>
+            </div>
+
+                </div>
+            </div>
+
+  
  <!-- key measurements -->
   <div class="container01">
   <div class="header01">
@@ -259,717 +282,8 @@
     <p>Last Updated: May 2025 | 🏥 Medical Records Department</p>
  </div> 
 </section>
-</section>
 
-
- <!-- about view start  -->
-
-
-<section id="about-view" class="active">
-      <!-- Ending of Header -->
-  <div class="container_about">
-  <section class="about-section">
-    <div class="about-text">
-      <h1 class="about_medco">ABOUT MEDCO ANALYZER</h1>
-      <h1 class="hello_user">HELLO USER'S</h1>
-      <!-- <h3>Hello Users</h3> -->
-      <p class="about_main_para">This is our Medical Analyzer which is cutting-edge health
-        technology platform design to assist patient and healthcare
-        providers in understanding medical data effectively. </p>
-      <pre class="about_pre">
-          <!-- <p class="main_purpose"><b>Its main purpose is:</b> -->
-          • To <b>analyze medical reports</b> (like-Blood, Health) 
-          • A user can <b>upload a report</b> (PDF, JPG, OR PNG File) 
-          • The system will <b>read the report, extract important health</b>
-             <b>information's</b> like Hemoglobin, WBC, Platelets, etc. 
-          • Then, it will <b>predict possible health problems</b> (like Anemia, 
-             Infections, Liver problems) based on the values. 
-          • The user <b>gets an instant analysis</b>—without needing to manually 
-             read complicated medical terms.
-        </p> </pre>
-      <p class="about_second_para">
-        Our Mission is to bridge the gap between complex medical information
-        and accessible healthcare guidance. Whether you’re uploading
-        prescriptions, lab reports or medical notes, Medical Analyzer extract
-        critical details, interprets potential conditions, and offers intelligent
-        health recommendations.
-        <br>
-        We are committed to accuracy, privacy, and empowering users with the
-        information they nedd to make informed decisions about their health.
-      </p>
-
-    </div>
-    </div>
-    <!-- Section  -->
-    <section class="features">
-      <div class="section-title">
-        <h2 class="use_medco">Why Use MEDCO</h2>
-        <!-- <p>Our advanced AI technology makes understanding your medical reports easier than ever.</p> -->
-      </div>
-
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">🔍</div>
-          <h3>Smart OCR Technology</h3>
-          <p>Our advanced OCR technology accurately extracts data from any lab report format.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">🧠</div>
-          <h3>AI Analysis</h3>
-          <p>Get intelligent insights about your health values and what they mean for your wellbeing.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">📈</div>
-          <h3>Track Changes</h3>
-          <p>Monitor how your health metrics change over time with trend analysis.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">🔒</div>
-          <h3>Secure & Private</h3>
-          <p>Your medical data is encrypted and never shared with third parties.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">📱</div>
-          <h3>Access Anywhere</h3>
-          <p>Access your reports and analysis from any device, anytime.</p>
-        </div>
-
-
-        <div class="feature-card">
-          <div class="feature-icon">💬</div>
-          <h3>Expert Insights</h3>
-          <p>Receive easy-to-understand explanations of complex medical terminology.</p>
-        </div>
-
-      </div>
-
-
-    <!-- End OF Section  -->
-
-
-    <section class="team-section">
-      <h2 style="text-align:center; margin-bottom:1rem;">Meet the Team</h2>
-      <div class="team-grid">
-        <div class="team-member" onclick="showModal('Alice', 'Lead Designer')">
-          <img src="ay.jpg" alt="Ansh Yadav" />
-          <h3>Ansh Yadav</h3>
-          <p>Frontend Developer</p>
-        </div>
-        <div class="team-member" onclick="showModal('Bob', 'Senior Developer')">
-          <img src="rr.jpg" alt="Riti Rai" />
-          <h3>Riti Rai</h3>
-          <p>Backend Developer</p>
-        </div>
-        <div class="team-member" onclick="showModal('Carol', 'Project Manager')">
-          <img src="ar.jpg" alt="Ayush Ranjan" />
-          <h3>Ayush Ranjan</h3>
-          <p>Frontend Developer</p>
-        </div>
-        <div class="team-member" onclick="showModal('David', 'UI/UX Specialist')">
-          <img src="at.jpg" alt="Ansh" />
-          <h3>Ansh</h3>
-          <p>Backend Developer</p>
-        </div>
-      </div>
-    </section>
-    <!-- Modal -->
-    <div class="modal" id="modal">
-      <div class="modal-content">
-        <h3 id="modal-name">Name</h3>
-        <p id="modal-role">Role</p>
-        <button class="close-btn" onclick="hideModal()">Close</button>
-      </div>
-    </div>
-     </section>
-    </section>
-    </section>
-
-
-
-    <!-- Analysis View -->
-
-<section id="analysis-view" class="active">
-<div class="dashboard">
-<div class="dashboard-header">
- 
-<!-- analysis page  start  -->
-
-
-<div class="container_analysis">
-    <div class="header_analysis">
-     
-
-                <div class="dashboard-title">
-                    <h2>Comprehensive Report Analysis</h2>
-                    <p>
-                        <i class="material-icons">event</i>
-                        Blood Test Report - May 15, 2025
-                    </p>
-                </div>
-                <div class="dashboard-actions">
-                    <button class="btn btn-secondary">
-                        <i class="material-icons">download</i>
-                        Export PDF
-                    </button>
-                    <button class="btn btn-primary">
-                        <i class="material-icons">share</i>
-                        Share with Doctor
-                    </button>
-                </div>
-            </div>
-    
-            <div class="tabs">
-                <div class="tab active">Overview</div>
-                <div class="tab">Blood Chemistry</div>
-                <div class="tab">Hematology</div>
-                <div class="tab">Liver Function</div>
-                <div class="tab">Lipid Profile</div>
-                <div class="tab">Hormones</div>
-                <div class="tab">Vitamins & Minerals</div>
-            </div>
-    
-            <!-- Buttons to show after analysis complete -->
-            <div class="print-download-buttons" style="display:none;">
-                <button class="btn btn-primary" onclick="viewDiagnosisOnly()">View Full Report</button>
-                <button class="btn btn-secondary" onclick="showDiagnosisAndPrint()">Print Report</button>
-            </div>
-        </div>
-   
-    
-                    <!-- Overview Section -->
-                    <div class="tab-content active">
-                        <div class="ai-insights">
-                            <div class="insights-header">
-                                <div class="insights-icon">
-                                    <i class="material-icons">lightbulb</i>
-                                </div>
-                                <h3 class="insights-title">AI-Generated Health Insights</h3>
-                            </div>
-                            
-                            <div class="insight-item">
-                                <div class="insight-title">
-                                    <i class="material-icons">priority_high</i>
-                                    Key Findings Summary
-                                </div>
-                                <p>Your results show generally good health with 3 parameters requiring attention. Your cholesterol levels are slightly elevated, and vitamin D levels are below optimal range. Other values are within normal ranges.</p>
-                            </div>
-                            
-                            <div class="insight-item">
-                                <div class="insight-title">
-                                    <i class="material-icons">trending_up</i>
-                                    Notable Changes
-                                </div>
-                                <p>Compared to your previous test (Feb 12, 2025), your HDL cholesterol has improved by 8%, while your vitamin D levels have decreased by 15%. Your blood glucose is stable with no significant change.</p>
-                            </div>
-                            
-                            <div class="insight-item">
-                                <div class="insight-title">
-                                    <i class="material-icons">recommend</i>
-                                    Recommendations
-                                </div>
-                                <p>Consider reviewing your vitamin D intake with a healthcare provider. Your cholesterol numbers suggest monitoring your saturated fat intake. Continue your current exercise routine which is positively affecting your HDL levels.</p>
-                            </div>
-                        </div>
-                        
-                        <h3 style="margin: 2rem 0 1rem">Key Measurements</h3>
-                        
-                        <div class="results-grid">
-                            <div class="result-card">
-                                <div class="result-header">
-                                    <div class="result-title">Cholesterol (Total)</div>
-                                    <span class="badge badge-warning">
-                                        <i class="material-icons" style="font-size: 16px">warning</i>
-                                        Elevated
-                                    </span>
-                                </div>
-                                <div class="result-value value-warning">215 <span style="font-size: 16px">mg/dL</span></div>
-                                <div class="normal-range">
-                                    <i class="material-icons" style="font-size: 16px">info</i>
-                                    Normal range: 125-200 mg/dL
-                                </div>
-                                <div class="result-chart mini-chart"></div>
-                                <div class="result-trend trend-up">
-                                    <i class="material-icons" style="font-size: 16px">arrow_upward</i>
-                                    <span>5% increase since last test</span>
-                                </div>
-                            </div>
-                            
-                            <div class="result-card">
-                                <div class="result-header">
-                                    <div class="result-title">HDL Cholesterol</div>
-                                    <span class="badge badge-normal">
-                                        <i class="material-icons" style="font-size: 16px">check_circle</i>
-                                        Normal
-                                    </span>
-                                </div>
-                                <div class="result-value value-normal">56 <span style="font-size: 16px">mg/dL</span></div>
-                                <div class="normal-range">
-                                    <i class="material-icons" style="font-size: 16px">info</i>
-                                    Normal range: >40 mg/dL
-                                </div>
-                                <div class="result-chart mini-chart"></div>
-                                <div class="result-trend trend-up">
-                                    <i class="material-icons" style="font-size: 16px">arrow_upward</i>
-                                    <span>8% increase since last test</span>
-                                </div>
-                            </div>
-                            
-                            <div class="result-card">
-                                <div class="result-header">
-                                    <div class="result-title">LDL Cholesterol</div>
-                                    <span class="badge badge-warning">
-                                        <i class="material-icons" style="font-size: 16px">warning</i>
-                                        Elevated
-                                    </span>
-                                </div>
-                                <div class="result-value value-warning">145 <span style="font-size: 16px">mg/dL</span></div>
-                                <div class="normal-range">
-                                    <i class="material-icons" style="font-size: 16px">info</i>
-                                    Normal range: <130 mg/dL></div>
-                                <div class="result-chart mini-chart"></div>
-                                <div class="result-trend trend-up">
-                                    <i class="material-icons" style="font-size: 16px">arrow_upward</i>
-                                    <span>3% increase since last test</span>
-                                </div>
-                            </div>
-                            
-                            <div class="result-card">
-                                <div class="result-header">
-                                    <div class="result-title">Glucose (Fasting)</div>
-                                    <span class="badge badge-normal">
-                                        <i class="material-icons" style="font-size: 16px">check_circle</i>
-                                        Normal
-                                    </span>
-                                </div>
-                                <div class="result-value value-normal">92 <span style="font-size: 16px">mg/dL</span></div>
-                                <div class="normal-range">
-                                    <i class="material-icons" style="font-size: 16px">info</i>
-                                    Normal range: 70-100 mg/dL
-                                </div>
-                                <div class="result-chart mini-chart"></div>
-                                <div class="result-trend trend-stable">
-                                    <i class="material-icons" style="font-size: 16px">drag_handle</i>
-                                    <span>Stable since last test</span>
-                                </div>
-                            </div>
-                            
-                            <div class="result-card">
-                                <div class="result-header">
-                                    <div class="result-title">Vitamin D</div>
-                                    <span class="badge badge-danger">
-                                        <i class="material-icons" style="font-size: 16px">error</i>
-                                        Low
-                                    </span>
-                                </div>
-                                <div class="result-value value-danger">18 <span style="font-size: 16px">ng/mL</span></div>
-                                <div class="normal-range">
-                                    <i class="material-icons" style="font-size: 16px">info</i>
-                                    Normal range: 30-80 ng/mL
-                                </div>
-                                <div class="result-chart mini-chart"></div>
-                                <div class="result-trend trend-down">
-                                    <i class="material-icons" style="font-size: 16px">arrow_downward</i>
-                                    <span>15% decrease since last test</span>
-                                </div>
-                            </div>
-                            
-                            <div class="result-card">
-                                <div class="result-header">
-                                    <div class="result-title">Hemoglobin</div>
-                                    <span class="badge badge-normal">
-                                        <i class="material-icons" style="font-size: 16px">check_circle</i>
-                                        Normal
-                                    </span>
-                                </div>
-                                <div class="result-value value-normal">14.5 <span style="font-size: 16px">g/dL</span></div>
-                                <div class="normal-range">
-                                    <i class="material-icons" style="font-size: 16px">info</i>
-                                    Normal range: 13.5-17.5 g/dL
-                                </div>
-                                <div class="result-chart mini-chart"></div>
-                                <div class="result-trend trend-stable">
-                                    <i class="material-icons" style="font-size: 16px">drag_handle</i>
-                                    <span>Stable since last test</span>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <!-- ending of key measurements  -->
-                        
-                        <div class="chart-container">
-                            <!-- Large chart would go here -->
-                            <div style="height: 300px; background-color: #f1f5f9; border-radius: var(--radius); display: flex; align-items: center; justify-content: center;">
-                            <div style="color: var(--text-secondary);"><bold>YOUR HEALTH METRICS VISUALIZATIONS <br> TAKE CARE & STAY HEALTHY-STAY HAPPY &#128516; </bold></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--DiagnosisResults-->
-        <section id="diagnosis-view" style="display: none;">
-            <div class="diagnosis-paper">
-              <div class="watermark">MEDCO</div>
-          
-              <div class="header">
-                <div class="logo">
-                  <span class="logo-icon">📊</span>
-                  <span class="logo-text">MEDCO Analyzer</span>
-                </div>
-                <h1 class="report-title">Comprehensive Health Analysis Report</h1>
-                <p class="report-subtitle">AI-Generated Health Assessment</p>
-              </div>
-          
-              <div class="patient-info">
-                <div class="info-item">
-                  <span class="info-label">Patient Name</span>
-                  <span class="info-value">John Doe</span>
-                </div>
-                <div class="info-item">
-                  <span class="info-label">Patient ID</span>
-                  <span class="info-value">MED-10056982</span>
-                </div>
-                <div class="info-item">
-                  <span class="info-label">Date of Birth</span>
-                  <span class="info-value">15 Mar 1985</span>
-                </div>
-                <div class="info-item">
-                  <span class="info-label">Gender</span>
-                  <span class="info-value">Male</span>
-                </div>
-                <div class="info-item">
-                  <span class="info-label">Report Date</span>
-                  <span class="info-value">15 May 2025</span>
-                </div>
-                <div class="info-item">
-                  <span class="info-label">Report Type</span>
-                  <span class="info-value">Blood Test Analysis</span>
-                </div>
-              </div>
-          
-              <h2 class="section-title">Executive Summary</h2>
-              <p class="summary-text">
-                This AI-assisted analysis of your blood test results indicates generally good health with a few areas requiring attention. Your cholesterol levels are slightly elevated, and vitamin D levels are below the optimal range. All other parameters evaluated are within normal limits. These findings suggest areas for potential lifestyle modifications and supplementation.
-              </p>
-          
-              <h2 class="section-title">Key Findings</h2>
-              <div class="key-findings">
-                <div class="finding-item">
-                  <div class="finding-icon warning-icon">!</div>
-                  <div class="finding-text">
-                    <strong>Elevated Cholesterol:</strong> Your total cholesterol (215 mg/dL) and LDL cholesterol (145 mg/dL) are above recommended levels, indicating moderate cardiovascular risk.
-                  </div>
-                </div>
-                <div class="finding-item">
-                  <div class="finding-icon normal-icon">✓</div>
-                  <div class="finding-text">
-                    <strong>Healthy HDL Levels:</strong> Your HDL ("good" cholesterol) is at 56 mg/dL, which is within the optimal range and suggests good cardiovascular protection.
-                  </div>
-                </div>
-                <div class="finding-item">
-                  <div class="finding-icon danger-icon">!</div>
-                  <div class="finding-text">
-                    <strong>Vitamin D Deficiency:</strong> Your vitamin D level (18 ng/mL) is significantly below the recommended range, which may affect bone health and immune function.
-                  </div>
-                </div>
-                <div class="finding-item">
-                  <div class="finding-icon normal-icon">✓</div>
-                  <div class="finding-text">
-                    <strong>Stable Blood Glucose:</strong> Your fasting glucose level (92 mg/dL) is within normal range, indicating good glycemic control.
-                  </div>
-                </div>
-              </div>
-          
-              <h2 class="section-title">Detailed Measurements</h2>
-              <div class="measurements">
-                <table class="measurement-table">
-                  <thead>
-                    <tr>
-                      <th>Parameter</th>
-                      <th>Your Value</th>
-                      <th>Reference Range</th>
-                      <th>Status</th>
-                      <th>Change</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Total Cholesterol</td>
-                      <td>215 mg/dL</td>
-                      <td>125-200 mg/dL</td>
-                      <td class="warning">Elevated</td>
-                      <td>↑ 5%</td>
-                    </tr>
-                    <tr>
-                      <td>HDL Cholesterol</td>
-                      <td>56 mg/dL</td>
-                      <td>&gt;40 mg/dL</td>
-                      <td class="normal">Normal</td>
-                      <td>↑ 8%</td>
-                    </tr>
-                    <tr>
-                      <td>LDL Cholesterol</td>
-                      <td>145 mg/dL</td>
-                      <td>&lt;130 mg/dL</td>
-                      <td class="warning">Elevated</td>
-                      <td>↑ 3%</td>
-                    </tr>
-                    <tr>
-                      <td>Glucose (Fasting)</td>
-                      <td>92 mg/dL</td>
-                      <td>70-100 mg/dL</td>
-                      <td class="normal">Normal</td>
-                      <td>→ Stable</td>
-                    </tr>
-                    <tr>
-                      <td>Vitamin D</td>
-                      <td>18 ng/mL</td>
-                      <td>30-80 ng/mL</td>
-                      <td class="danger">Low</td>
-                      <td>↓ 15%</td>
-                    </tr>
-                    <tr>
-                      <td>Hemoglobin</td>
-                      <td>14.5 g/dL</td>
-                      <td>13.5-17.5 g/dL</td>
-                      <td class="normal">Normal</td>
-                      <td>→ Stable</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-          
-              <h2 class="section-title">Recommendations</h2>
-              <div class="recommendations">
-                <div class="recommendation-item">
-                  Consider discussing vitamin D supplementation with your healthcare provider.
-                </div>
-                <div class="recommendation-item">
-                  Review your diet to reduce intake of saturated fats and increase consumption of heart-healthy fats.
-                </div>
-                <div class="recommendation-item">
-                  Continue your current exercise routine, which appears to be positively affecting your HDL cholesterol levels.
-                </div>
-                <div class="recommendation-item">
-                  Schedule a follow-up lipid panel in 3 months to monitor progress.
-                </div>
-                <div class="recommendation-item">
-                  Maintain regular health screenings for preventative care.
-                </div>
-              </div>
-          
-              <div class="doctor-signature">
-                <div class="signature-block">
-                  <div class="signature-line"></div>
-                  <p>Reviewing Physician</p>
-                </div>
-                <div class="signature-block">
-                  <div class="signature-line"></div>
-                  <p>Patient Acknowledgment</p>
-                </div>
-              </div>
-          
-              <div class="footer">
-                <p>MEDCO Health Analytics • 123 Medical Drive, Health City • support@medscan.ai • (555) 123-4567</p>
-                <p class="disclaimer">This report is generated with AI assistance and should be reviewed by a healthcare professional before making medical decisions. Not a substitute for professional medical advice.</p>
-              </div>
-            </div>
-          
-            <div class="print-download-buttons">
-                <!-- Print Report Button -->
-                <button class="btn btn-secondary" onclick="showDiagnosisAndPrint()">
-                <span> Print Report</span>
-                    </button>
-  <!-- View Report Button -->
-                <button class="btn btn-primary" onclick="viewDiagnosisOnly()">
-                   <span> View Full Report</span>  </button>
-
-              <button class="btn btn-primary" onclick="downloadAsPDF()">
-                <span>Download as PDF</span>
-              </button>
-            </div>
-          </section>
- 
-       
-
-
-            </section>
-</div>
-</section>
- </section>
-
- 
-
-
-
-
-
-
-
-
-      
-
-    <!-- history page start  -->
-
-<section id="history-view" class="active">
-    <div class="container">
-        <div class="main-content">
-            <div class="sidebar">
-                <select class="patient-select" id="patient-select">
-                    <option value="">Select a patient</option>
-                    <option value="patient1">Ansh yadav</option>
-                    <option value="patient2">Riti rai</option>
-                    <option value="patient3">Ayush Ranjan</option>
-                    <option value="patient4">Ansh</option>
-                </select>
-                
-                <ul class="sidebar-menu">
-                    <li><a href="#" class="activee">Test History</a></li>
-                    <li><a href="#">Patient Profile</a></li>
-                    <li><a href="#">Medications</a></li>
-                    <li><a href="#">Reports</a></li>
-                    <li><a href="#">Notes</a></li>
-                </ul>
-            </div>
-            
-            <div class="history-content">
-                <div class="page-title">
-                    <h2>Test History</h2>
-                    <button class="export-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        Export Data
-                    </button>
-                </div>
-                
-                <div class="patient-info" id="patient-info">
-                    <div class="patient-avatar" id="patient-avatar">AY</div>
-                    <div class="patient-details">
-                        <h3 id="patient-name">Select a patient</h3>
-                        <div class="patient-meta" id="patient-meta">
-                            <!-- Patient metadata will be populated dynamically -->
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="filter-container">
-                    <select id="test-type-filter">
-                        <option value="">All Test Types</option>
-                        <option value="blood">Blood Test</option>
-                        <option value="urine">Urine Analysis</option>
-                        <option value="imaging">Imaging</option>
-                        <option value="cardiac">Cardiac</option>
-                    </select>
-                    
-                    <select id="date-filter">
-                        <option value="">All Dates</option>
-                        <option value="week">Last Week</option>
-                        <option value="month">Last Month</option>
-                        <option value="quarter">Last 3 Months</option>
-                        <option value="year">Last Year</option>
-                    </select>
-                    
-                    <select id="status-filter">
-                        <option value="">All Status</option>
-                        <option value="normal">Normal</option>
-                        <option value="abnormal">Abnormal</option>
-                        <option value="review">Needs Review</option>
-                    </select>
-                </div>
-                
-                <div class="results-count" id="results-count">Showing 0 results</div>
-                
-                <div class="loading" id="loading">
-                    <div class="skeleton"></div>
-                    <div class="skeleton"></div>
-                    <div class="skeleton"></div>
-                    <div class="skeleton"></div>
-                </div>
-                
-                <div class="no-data" id="no-data">
-                    <p>Please select a patient to view their test history</p>
-                </div>
-                
-                <table class="history-table" id="history-table" style="display: none;">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Test Type</th>
-                            <th>Ordered By</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="history-table-body">
-                        <!-- Table rows will be populated dynamically -->
-                    </tbody>
-                </table>
-                
-                <div class="pagination" id="pagination" style="display: none;">
-                    <button class="pagination-btn">&lt;</button>
-                    <button class="pagination-btn active">1</button>
-                    <button class="pagination-btn">2</button>
-                    <button class="pagination-btn">3</button>
-                    <button class="pagination-btn">&gt;</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-    <!-- history page end  -->
-
-
-
-
-
-
-    <!-- contact yaha se start hai  -->
-     
-  <section id="contact-view" class="active">
-    <div class="contain">
-        <!-- <header class="header01"> -->
-            <div class="header01">
-            <h4>Contact Us</h4>
-            <p class="subtitle">We'd love to hear from you. Please fill out the form below.</p>
-        </div>
-        <!-- </header> -->
-        
-        <div class="contact-form">
-            <form id="contactForm" action="your-form-handler.php" method="POST">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" placeholder="Name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="query">Write Your Query</label>
-                    <textarea id="query" name="query" placeholder="Hii Write Your All Queries Here" required></textarea>
-                </div>
-                
-                <button type="submit">Send Message</button>
-            </form>
-        </div>
-        
-        <div class="contact-info">
-            <p>You can also reach us at: <strong>contact@MEDCO Analyzer.com</strong></p>
-        </div>
-    </div>
-</section>
-</section>
 </main>
-    <!-- yaha se ktm h contact html  -->
              
         
     <footer>
@@ -988,10 +302,10 @@
         <div class="footer-section">
         <h3 class="backk">Quick Links</h3>
         <ul class="footer-links">
-            <li><a href="#" onclick="activateView('upload-view')">Upload Report</a></li>
-            <li><a href="#" onclick="activateView('analysis-view')">Analysis</a></li>
-            <li><a href="#" onclick="activateView('history-view')">History</a></li>
-            <li><a href="#">Profile</a></li>
+            <li><a href="#" onclick="window.location.href='/'">Upload Report</a></li>
+            <li><a href="#" onclick="window.location.href='/upload'">Prescription Reader</a></li>
+            <li><a href="#" onclick="window.location.href='/MedAssist'">MedAssist</a></li>
+            <li><a href="#" onclick="window.location.href='/about'">Profile</a></li>
         </ul>
         </div>
             <div class="footer-section">
@@ -1005,10 +319,11 @@
     <div class="copyright">
         © 2025 MEDCO Analyzer. All rights reserved.
     </div>
-    
+
+
     </footer>
      <script src="{{ url_for('static', filename='js/medco.js') }}"></script>
-   
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
     </body>
     </html>
     

@@ -1,11 +1,11 @@
+import json
 import re
 import spacy
 from spacy.tokens import Span
-from fuzzywuzzy import process
+from rapidfuzz import process
 from medspacy.ner import TargetRule
 from typing import Dict, List, Set
 from collections import defaultdict
-
 class MedicalNLP:
     def __init__(self):
         """Initialize the medical NLP processor with models and rules"""
@@ -118,7 +118,7 @@ class MedicalNLP:
 
         # Eye, Ear, Skin
         "Cataract", "Glaucoma", "Eczema", "Dandruff"
-         }
+        }
         return diseases
 
     def _add_clinical_rules(self, matcher):
@@ -132,185 +132,272 @@ class MedicalNLP:
             TargetRule("nodule", "LESION")
         ]
         matcher.add(clinical_concepts)
-
-    def process_text(self, text):
-        print(f"DEBUG: Input text (first 200 chars): {text[:200]}")  # Debug 3
         
-        doc = self.nlp(text)
-        
-        print(f"DEBUG: Found {len(doc.ents)} entities")  # Debug 4
-         
-         
-        # Extract diseases and deduplicate
-        diseases = self._extract_diseases(doc)
-        
-        unique_diseases = {}
-        for d in diseases:
-            key = (d['text'].lower(), d['section'])
-            if key not in unique_diseases:
-                unique_diseases[key] = d
-        diseases = list(unique_diseases.values())
-        
-        return {
-            "measurements": self._extract_measurements(text),
-            "diseases": self._extract_diseases(doc),
-            "specialization": self._predict_specialization(doc),
-            "findings": self._extract_key_findings(text),
-            "recommendations": self._extract_recommendations(doc)
-        }
     def _extract_measurements(self, text: str) -> Dict[str, List[Dict[str, str]]]:
-        """Enhanced measurement extraction with breast imaging focus"""
-        patterns = {
-        # Breast Imaging Specific
-         "Lesion Size": r"(\d+\.?\d*)\s*[x×]\s*(\d+\.?\d*)\s*cm",
-        "BI-RADS Category": r"BI-RADS\s*[-]?\s*([0-6IV]+)",
-        "Clock Position": r"(\d+)\s*(?:o['′]?clock|oclock)",
-         "Mass Margin": r"(circumscribed|microlobulated|obscured|indistinct|spiculated)\s*margin",
-            
-         # Vitals and Lab Measurements (condensed)
-        "Blood Pressure": r"(\d{2,3})/(\d{2,3})\s*mmHg",
-        "Glucose": r"(?i)(?:glucose|sugar)[\s:]*(\d+)\s*(?:mg/dl|mg%)",
-        "Hemoglobin": r"(?i)(?:hb|hemoglobin)[\s:]*(\d+\.?\d*)\s*(?:g/dl)",
+        lines = text.splitlines()
+        blocks = []
+        for i in range(len(lines) - 3):
+            block = ' '.join(lines[i:i+4])
+            blocks.append(block)
+            # Default fallback units
+        default_units = {
         # Vitals
-        "Height": r"(?i)(?:height)[\s:]*(\d+\.?\d*)\s*(cm|m|ft|in|feet|inches)",
-        "BMI": r"BMI\s*[:\-]?\s*(\d+\.?\d*)",
-        "Weight": r"(\d+\.?\d*)\s*(kg|lbs|Ibs)",
-        "Blood Pressure": r"(\d{2,3})/(\d{2,3})\s*mmHg",
-        "Heart Rate": r"(\d+)\s*bpm",
-        "Temperature": r"(temperature|temp)\s*[:\-]?\s*(\d{2,3}(?:\.\d+)?)\s*(°?[cCfF])?",  
-        "Respiratory Rate": r"(\d+)\s*breaths/min",
-        "SpO2": r"(\d+)%\s*SpO2",
-        "Fever": r"(?i)(?:fever|temp|temperature)[\s:]*(\d{2,3}\.?\d*)\s*°?[CF]",
+        "Blood Pressure": "mmHg",
+        "Heart Rate": "bpm",
+        "Respiratory Rate": "breaths/min",
+        "Temperature": "°C",
+        "SpO2": "%",
+        "Height": "cm",
+        "Weight": "kg",
+        "BMI": "kg/m²",
 
-        # Blood tests
-        "Hemoglobin": r"(?i)(?:hb|hemoglobin)[\s:]*(\d+\.?\d*)\s*(?:g/dl|g/dL|gm%|gram%)",
-        "WBC Count": r"(?i)(?:wbc|white blood cells)[\s:]*(\d+\.?\d*)\s*(?:K/μL|k/ul|x10³/μL)",
-        "Platelets": r"(?i)(?:platelets|plt)[\s:]*(\d+)\s*(?:K/μL|x10³/μL)",
-        "Glucose": r"(?i)(?:glucose|sugar|bs|rbs|fbs)[\s:]*(\d+)\s*(?:mg/dl|mg%)",
-        "HbA1c": r"(?i)(?:hba1c|a1c|glycohemoglobin)[\s:]*(\d+\.?\d*)\s*%",
-        "Serum Creatinine": r"(?i)(?:creatinine|scr)[\s:]*(\d+\.?\d*)\s*(?:mg/dl)",
-        "BUN": r"(?i)(?:bun|urea nitrogen)[\s:]*(\d+)\s*(?:mg/dl)",
-        "RBC": r"RBC\s*[:\-]?\s*(\d+\.?\d*)",
-        "Platelets": r"Platelets\s*[:\-]?\s*(\d+\.?\d*)",
-        "ESR": r"ESR\s*[:\-]?\s*(\d+\.?\d*)",
-        "CRP": r"CRP\s*[:\-]?\s*(\d+\.?\d*)\s*mg/L",
-        "LDH": r"LDH\s*[:\-]?\s*(\d+\.?\d*)",
-        "PT": r"PT\s*[:\-]?\s*(\d+\.?\d*)",
-        "PTT": r"PTT\s*[:\-]?\s*(\d+\.?\d*)",
-        "INR": r"INR\s*[:\-]?\s*(\d+\.?\d*)",
-        "D-Dimer": r"D-Dimer\s*[:\-]?\s*(\d+\.?\d*)",
-        "Fibrinogen": r"Fibrinogen\s*[:\-]?\s*(\d+\.?\d*)",
-        
-        # Lipid profile
-        "Cholesterol": r"Total Cholesterol\s*[:\-]?\s*(\d+\.?\d*)",
-        "HDL": r"HDL\s*[:\-]?\s*(\d+\.?\d*)",
-        "LDL": r"LDL\s*[:\-]?\s*(\d+\.?\d*)",
-        "Triglycerides": r"Triglycerides\s*[:\-]?\s*(\d+\.?\d*)",
-        # Liver
-        "ALT": r"ALT\s*[:\-]?\s*(\d+\.?\d*)",
-        "AST": r"AST\s*[:\-]?\s*(\d+\.?\d*)",
-        "ALP": r"ALP\s*[:\-]?\s*(\d+\.?\d*)",
-        "Bilirubin": r"Bilirubin\s*[:\-]?\s*(\d+\.?\d*)",
-        "Albumin": r"Albumin\s*[:\-]?\s*(\d+\.?\d*)",
-        # Kidney
-        "Creatinine": r"Creatinine\s*[:\-]?\s*(\d+\.?\d*)",
-        "Urea": r"Urea\s*[:\-]?\s*(\d+\.?\d*)",
-        "BUN": r"BUN\s*[:\-]?\s*(\d+\.?\d*)",
-        "eGFR": r"eGFR\s*[:\-]?\s*(\d+\.?\d*)",
+        # Diabetes
+        "Glucose": "mg/dL",
+        "HbA1c": "%",
+
+        # Hematology
+        "Hemoglobin": "g/dL",
+        "Total Leukocyte Count": "cells/cumm",
+        "Total RBC Count": "million/cumm",
+        "Platelet Count": "lakh/cumm",
+        "Hematocrit (HCT)": "%",
+        "MCV": "fL",
+        "MCH": "pg",
+        "MCHC": "g/dL",
+        "Neutrophils": "%",
+        "Lymphocytes": "%",
+        "Monocytes": "%",
+        "Eosinophils": "%",
+        "Basophils": "%",
+
+        # Lipid Profile
+        "Total Cholesterol": "mg/dL",
+        "HDL Cholesterol": "mg/dL",
+        "LDL Cholesterol": "mg/dL",
+        "Triglycerides": "mg/dL",
+
+        # Liver Function
+        "SGPT (ALT)": "U/L",
+        "SGOT (AST)": "U/L",
+        "ALP": "U/L",
+        "Bilirubin Total": "mg/dL",
+        "Bilirubin Direct": "mg/dL",
+        "Albumin": "g/dL",
+
+        # Kidney Function
+        "Serum Creatinine": "mg/dL",
+        "BUN": "mg/dL",
+        "Urea": "mg/dL",
+        "eGFR": "mL/min/1.73m²",
+
         # Electrolytes
-        "Sodium": r"Sodium\s*[:\-]?\s*(\d+\.?\d*)",
-        "Potassium": r"Potassium\s*[:\-]?\s*(\d+\.?\d*)",
-        "Calcium": r"Calcium\s*[:\-]?\s*(\d+\.?\d*)",
-        "Magnesium": r"Magnesium\s*[:\-]?\s*(\d+\.?\d*)",
-        "Chloride": r"Chloride\s*[:\-]?\s*(\d+\.?\d*)",
-        # Additional measurements
-        "TSH": r"TSH\s*[:\-]?\s*(\d+\.?\d*)",
-        "T3": r"T3\s*[:\-]?\s*(\d+\.?\d*)",
-        "T4": r"T4\s*[:\-]?\s*(\d+\.?\d*)",
-        "Uric Acid": r"Uric Acid\s*[:\-]?\s*(\d+\.?\d*)",
-        "Ferritin": r"Ferritin\s*[:\-]?\s*(\d+\.?\d*)",
-        "Vitamin B12": r"Vitamin B12\s*[:\-]?\s*(\d+\.?\d*)",
-        "D-Dimer": r"D-Dimer\s*[:\-]?\s*(\d+\.?\d*)",
-        "Troponin": r"Troponin\s*[:\-]?\s*(\d+\.?\d*)",
-        "PSA": r"PSA\s*[:\-]?\s*(\d+\.?\d*)",
-        # Chronic Conditions with Severity
-        "Hypertension Stage": r"(?i)(?:hypertension|htn)[\s:]*(stage [12]|\d{2,3}/\d{2,3})",
-        "Diabetes Control": r"(?i)(?:diabetes|dm)[\s:]*(poorly|well)[-]?controlled",
-        "Asthma Severity": r"(?i)(?:asthma)[\s:]*(mild|moderate|severe|intermittent|persistent)",
-        # Quantitative Symptoms
-        "Weight Loss": r"(?i)(?:weight loss|lost)[\s:]*(\d+)\s*(kg|lbs|pounds?)(?:\s*in\s*(\d+)\s*(?:months?|weeks?|days?))?",
-        "Pain Score": r"(?i)(?:pain)[\s:]*(\d)\s*[-]?\s*(\d)\s*(?:/10|out of 10)",
-        "Bleeding Duration": r"(?i)(?:bleeding|menstrual|period)[\s:]*last(?:ing|ed)?\s*(\d+)\s*(?:days|hours)",
-    
-        # Infection Markers
-        "COVID-19 Test": r"(?i)(?:covid|sars-cov-2)[\s:]*((?:pcr|rapid|antigen)?\s*(?:positive|negative|\+|\-))",
-        "Infection Count": r"(?i)(?:wbc|white cells)[\s:]*elevated\s*at\s*(\d+)\s*(?:K/μL)",
-    
-        # Specialized Tests
-        "PSA Level": r"(?i)(?:psa)[\s:]*(\d+\.?\d*)\s*(?:ng/ml)",
-        "Vitamin D": r"(?i)(?:vit d|25-oh)[\s:]*(\d+)\s*(?:ng/ml|nmol/L)",
-        "Thyroid TSH": r"(?i)(?:tsh|thyroid)[\s:]*(\d+\.?\d*)\s*(?:μIU/ml|mIU/L)",
-    
-        # Medication Dosages
-        "Insulin Dose": r"(?i)(?:insulin)[\s:]*(\d+)\s*(?:units|iu)(?:\s*(?:bid|tid|qid|daily))?",
-        "Warfarin Dose": r"(?i)(?:warfarin|coumadin)[\s:]*(\d+\.?\d*)\s*(?:mg)(?:\s*(?:daily|od))?"
+        "Sodium": "mmol/L",
+        "Potassium": "mmol/L",
+        "Calcium": "mg/dL",
+        "Phosphate": "mg/dL",
+        "Magnesium": "mg/dL",
+        "Chloride": "mmol/L",
+
+        # Thyroid
+        "TSH": "µIU/mL",
+        "T3": "ng/dL",
+        "T4": "µg/dL",
+        "Insulin": "µIU/mL",
+
+        # Vitamins
+        "Vitamin D": "ng/mL",
+        "Vitamin B12": "pg/mL",
+        "Folate": "ng/mL",
+        "Vitamin A": "µg/L",
+        "Vitamin E": "mg/L",
+        "Vitamin K": "ng/mL",
+
+        # Cardiac Markers
+        "Troponin": "ng/mL",
+        "CKMB": "U/L",
+        "Pro-BNP": "pg/mL",
+        "NT-proBNP": "pg/mL",
+
+        # Coagulation
+        "INR": "",
+        "PT": "sec",
+        "PTT": "sec",
+        "Fibrinogen": "mg/dL",
+
+        # Inflammation
+        "ESR": "mm/hr",
+        "CRP": "mg/L",
+        "hs-CRP": "mg/L",
+        "Procalcitonin": "ng/mL",
+        "D-Dimer": "µg/mL",
+
+        # Uric Acid
+        "Uric Acid": "mg/dL",
+
+        # Iron Studies
+        "Serum Iron": "µg/dL",
+        "TIBC": "µg/dL",
+        "Transferrin Saturation": "%",
+
+        # Extended Kidney
+        "Urine Albumin": "mg/L",
+        "Albumin/Creatinine Ratio": "mg/g",
+
+        # Autoimmune
+        "Rheumatoid Factor": "IU/mL",
+        "Anti-CCP": "U/mL",
+        "ANA": "",
+
+        # Tumor Markers
+        "PSA": "ng/mL",
+        "CA-125": "U/mL",
+        "CEA": "ng/mL",
+        "AFP": "ng/mL",
         }
-        
+
+        #------all the patterns are written dow
+        patterns = {
+    # --- Vitals ---
+    "Blood Pressure": r"(\d{2,3})/(\d{2,3})\s*mmHg",
+    "Heart Rate": r"(\d+)\s*bpm",
+    "Respiratory Rate": r"(\d+)\s*breaths/min",
+    "Temperature": r"(?i)(?:temperature|temp)\s*[:\-]?\s*(\d{2,3}(?:\.\d+)?)\s*(°?[cCfF])",
+    "SpO2": r"(\d+)\s*%\s*SpO2",
+
+    # --- Anthropometric ---
+    "Height": r"(?i)height\s*[:\-]?\s*(\d+\.?\d*)\s*(cm|m|ft|in|feet|inches)",
+    "Weight": r"(?i)(\d+\.?\d*)\s*(kg|lbs|Ibs)",
+    "BMI": r"(?i)BMI\s*[:\-]?\s*(\d+\.?\d*)",
+
+    # --- Blood Glucose / Diabetes ---
+    "Glucose": r"(?i)(?:glucose|sugar|bs|rbs|fbs)\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/dl|mg%)?",
+    "HbA1c": r"(?i)(?:hba1c|a1c|glycohemoglobin)\s*[:\-]?\s*(\d+\.?\d*)\s*%?",
+
+    # --- Hematology (CBC) ---
+    "Hemoglobin": r"(?i)(?:hb|hemoglobin)\s*[:\-]?\s*([\d.,]+)\s*(g/dl|gm%|gram%)?",
+    "Total Leukocyte Count": r"(?i)(?:total\s+leukocyte\s+count|tlc|wbc|white\s*blood\s*cells)\s*[:\-]?\s*([\d,]+\.?\d*)\s*(cumm|cells/?cumm|k/μl|k/ul|10\^3/μl)?",
+    "Total RBC Count": r"(?i)(?:total\s*rbc\s*count|rbc\s*count|trbc|rbc)\s*[:\-]?\s*([\d,]+\.?\d*)\s*(million/?cumm|10\^6/μl)?",
+    "Platelet Count": r"(?i)(?:platelet\s*count|platelets|plt)\s*[:\-]?\s*([\d,]+\.?\d*)\s*(lakhs/?cumm|k/μl|10\^3/μl)?",
+    "Hematocrit (HCT)": r"(?i)(?:hematocrit|hct|pcv)\s*[:\-]?\s*([\d.,]+)\s*%?",
+    "MCV": r"(?i)MCV\s*[:\-]?\s*([\d.,]+)\s*(fL|fl)?",
+    "MCH": r"(?i)MCH\s*[:\-]?\s*([\d.,]+)\s*(pg)?",
+    "MCHC": r"(?i)MCHC\s*[:\-]?\s*([\d.,]+)\s*(g/dl|%)?",
+    "Neutrophils": r"(?i)neutrophils?\s*[:\-]?\s*([\d.,]+)\s*%?",
+    "Lymphocytes": r"(?i)lymphocytes?\s*[:\-]?\s*([\d.,]+)\s*%?",
+    "Monocytes": r"(?i)monocytes?\s*[:\-]?\s*([\d.,]+)\s*%?",
+    "Eosinophils": r"(?i)eosinophils?\s*[:\-]?\s*([\d.,]+)\s*%?",
+    "Basophils": r"(?i)basophils?\s*[:\-]?\s*([\d.,]+)\s*%?",
+
+    # --- Lipid Profile ---
+    "Total Cholesterol": r"(?i)total\s*cholesterol\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/dl)?",
+    "HDL Cholesterol": r"(?i)hdl\s*cholesterol\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/dl)?",
+    "LDL Cholesterol": r"(?i)ldl\s*cholesterol\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/dl)?",
+    "Triglycerides": r"(?i)triglycerides\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/dl)?",
+
+    # --- Liver Function ---
+    "SGPT (ALT)": r"(?i)(?:sgpt|alt)\s*[:\-]?\s*(\d+\.?\d*)\s*(u/l)?",
+    "SGOT (AST)": r"(?i)(?:sgot|ast)\s*[:\-]?\s*(\d+\.?\d*)\s*(u/l)?",
+    "ALP": r"(?i)ALP\s*[:\-]?\s*(\d+\.?\d*)\s*(U/L)?",
+    "Bilirubin Total": r"(?i)bilirubin\s*total\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/dl)?",
+    "Bilirubin Direct": r"(?i)bilirubin\s*direct\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/dl)?",
+    "Albumin": r"(?i)albumin\s*[:\-]?\s*(\d+\.?\d*)",
+
+    # --- Kidney Function ---
+    "Serum Creatinine": r"(?i)(?:creatinine|scr)\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/dl)?",
+    "BUN": r"(?i)BUN\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/dl)?",
+    "Urea": r"(?i)urea\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/dl)?",
+    "eGFR": r"(?i)eGFR\s*[:\-]?\s*(\d+\.?\d*)",
+
+    # --- Electrolytes ---
+    "Sodium": r"(?i)sodium\s*[:\-]?\s*(\d+\.?\d*)",
+    "Potassium": r"(?i)potassium\s*[:\-]?\s*(\d+\.?\d*)",
+    "Calcium": r"(?i)calcium\s*[:\-]?\s*(\d+\.?\d*)",
+    "Phosphate": r"(?i)phosphate\s*[:\-]?\s*(\d+\.?\d*)",
+    "Magnesium": r"(?i)magnesium\s*[:\-]?\s*(\d+\.?\d*)",
+    "Chloride": r"(?i)chloride\s*[:\-]?\s*(\d+\.?\d*)",
+
+    # --- Thyroid & Hormones ---
+    "TSH": r"(?i)TSH\s*[:\-]?\s*(\d+\.?\d*)",
+    "T3": r"(?i)T3\s*[:\-]?\s*(\d+\.?\d*)",
+    "T4": r"(?i)T4\s*[:\-]?\s*(\d+\.?\d*)",
+    "Insulin": r"(?i)insulin\s*[:\-]?\s*(\d+\.?\d*)",
+
+    # --- Vitamins ---
+    "Vitamin D": r"(?i)(?:vitamin d|25-oh)\s*[:\-]?\s*(\d+\.?\d*)\s*(ng/ml|nmol/L)?",
+    "Vitamin B12": r"(?i)vitamin\s*b12\s*[:\-]?\s*(\d+\.?\d*)",
+
+    # --- Cardiac Markers ---
+    "Troponin": r"(?i)troponin\s*[:\-]?\s*(\d+\.?\d*)",
+    "CKMB": r"(?i)CK[-\s]?MB\s*[:\-]?\s*(\d+\.?\d*)",
+    "Pro-BNP": r"(?i)(?:pro[-\s]?bnp|bnp)\s*[:\-]?\s*(\d+\.?\d*)",
+
+    # --- Coagulation ---
+    "INR": r"(?i)INR\s*[:\-]?\s*(\d+\.?\d*)",
+    "PT": r"(?i)PT\s*[:\-]?\s*(\d+\.?\d*)",
+    "PTT": r"(?i)PTT\s*[:\-]?\s*(\d+\.?\d*)",
+    "Fibrinogen": r"(?i)fibrinogen\s*[:\-]?\s*(\d+\.?\d*)",
+
+    # --- Infection / Inflammation ---
+    "ESR": r"(?i)ESR\s*[:\-]?\s*(\d+\.?\d*)",
+    "CRP": r"(?i)CRP\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/L)?",
+    "Procalcitonin": r"(?i)procalcitonin\s*[:\-]?\s*(\d+\.?\d*)",
+    "D-Dimer": r"(?i)D-?Dimer\s*[:\-]?\s*(\d+\.?\d*)",
+
+    # --- Uric Acid ---
+    "Uric Acid": r"(?i)uric acid\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/dl)?",
+    #Iron Studies
+    "Serum Iron": r"(?i)serum iron\s*[:\-]?\s*(\d+\.?\d*)\s*(µg/dl|ug/dl)?",
+    "TIBC": r"(?i)(?:tibc|total iron binding capacity)\s*[:\-]?\s*(\d+\.?\d*)\s*(µg/dl|ug/dl)?",
+    "Transferrin Saturation": r"(?i)transferrin\s*saturation\s*[:\-]?\s*(\d+\.?\d*)\s*%?",
+    #Kidney Extended
+    "Urine Albumin": r"(?i)(?:urine\s*albumin|microalbuminuria)\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/L|mg/g)?",
+    "Albumin/Creatinine Ratio": r"(?i)(?:acr|albumin.creatinine ratio)\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/g)?",
+    "hs-CRP": r"(?i)(?:hs.?crp|high.sensitivity crp)\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/L)?",
+    "NT-proBNP": r"(?i)(?:nt.?probnp|nt pro bnp)\s*[:\-]?\s*(\d+\.?\d*)",
+    "Homocysteine": r"(?i)homocysteine\s*[:\-]?\s*(\d+\.?\d*)\s*(µmol/L|umol/L)?",
+    "PSA": r"(?i)(?:psa|prostate specific antigen)\s*[:\-]?\s*(\d+\.?\d*)\s*(ng/ml)?",
+    "CA-125": r"(?i)CA.?125\s*[:\-]?\s*(\d+\.?\d*)\s*(U/ml)?",
+    "CEA": r"(?i)CEA\s*[:\-]?\s*(\d+\.?\d*)\s*(ng/ml)?",
+    "AFP": r"(?i)(?:AFP|alpha fetoprotein)\s*[:\-]?\s*(\d+\.?\d*)\s*(ng/ml)?",
+    "HIV": r"(?i)(?:hiv\s*1/?2|anti.?hiv)\s*[:\-]?\s*(reactive|non.?reactive|positive|negative)",
+    "HBsAg": r"(?i)(?:hbsag|hepatitis\s*b\s*surface\s*antigen)\s*[:\-]?\s*(reactive|non.?reactive|positive|negative)",
+    "HCV": r"(?i)(?:hcv|anti.?hcv)\s*[:\-]?\s*(reactive|non.?reactive|positive|negative)",
+    "ANA": r"(?i)(?:ana|antinuclear antibody)\s*[:\-]?\s*(positive|negative|[\d\.]+)",
+    "Rheumatoid Factor": r"(?i)(?:rf|rheumatoid\s*factor)\s*[:\-]?\s*(\d+\.?\d*)\s*(IU/ml)?",
+    "Anti-CCP": r"(?i)(?:anti.?ccp)\s*[:\-]?\s*(\d+\.?\d*)\s*(U/ml)?",
+    "Folate": r"(?i)folate\s*[:\-]?\s*(\d+\.?\d*)\s*(ng/ml)?",
+    "Vitamin A": r"(?i)vitamin\s*A\s*[:\-]?\s*(\d+\.?\d*)\s*(µg/L|ug/L)?",
+    "Vitamin E": r"(?i)vitamin\s*E\s*[:\-]?\s*(\d+\.?\d*)\s*(mg/L)?",
+    "Vitamin K": r"(?i)vitamin\s*K\s*[:\-]?\s*(\d+\.?\d*)\s*(ng/ml)?",
+}
+
         results = defaultdict(list)
         for name, pattern in patterns.items():
             try:
-                matches = re.finditer(pattern, text, re.IGNORECASE)
-                for m in matches:
-                 if name == "Blood Pressure":
-                    systolic, diastolic = m.group(1), m.group(2)
-                    unit = m.group(3) if m.group(3) else "mmHg"
-                    results[name].append({
-                        "value": f"{systolic}/{diastolic}",
-                        "unit": unit
-                    })
-                 elif name == "Lesion Size":
-                    results[name].append({
-                        "value": m.group(1),
-                        "unit": "cm"
-                    })
-                 elif name == "Clock Position":
-                    results[name].append({
-                        "value": f"{m.group(1)} o'clock"
-                    })
-                 elif len(m.groups()) >= 2:
-                  value, unit = m.group(1), m.group(2)
-                  results[name].append({
-                           "value": float(value) if '.' in value else int(value),
-                        "unit": unit
-                    })
-                 else:
-                    results[name].append({
-                        "value": m.group(1)
-                    })
+                for m in re.finditer(pattern, text, re.IGNORECASE):
+                    raw_val = m.group(1)
+                    unit = m.group(2) if len(m.groups()) >= 2 and m.group(2) else ""
+                    # fallback to default units
+                    if not unit and name in default_units:
+                        unit = default_units[name]
+                    # commas hatao
+                    cleaned = raw_val.replace(",", "").strip()
+                    try:
+                        num = float(cleaned)
+                    except Exception:
+                        num = float(re.sub(r"[^\d.]", "", cleaned)) if re.search(r"\d", cleaned) else None
+                    if num is not None:
+                        results[name].append({"value": num, "unit": unit.strip()})
             except Exception as e:
-             print(f"Error processing pattern {name}: {e}")
-    
+                print(f"[ERROR] Pattern '{name}': {e}")
         return dict(results)
 
-    def _extract_diseases(self, doc) -> List[Dict]:
-        """Extract diseases with clinical context"""
-        diseases = []
-        for ent in doc.ents:
-            if ent.label_ == "DISEASE":
-                normalized_text = self._normalize_disease(ent.text)
-                diseases.append({
-                    "text": normalized_text,
-                    "negated": ent._.is_negated,
-                    "uncertain": ent._.is_uncertain,
-                    "historical": ent._.is_historical,
-                    "section": str(ent._.section_title).rstrip(':') if hasattr(ent._, "section_title")and ent._.section_title else None
-                })
-        return diseases
-
+    
+    
     def _predict_specialization(self, doc) -> str:
         """Predict medical specialty with enhanced logic"""
         specialization_map = {
-         # Oncology/Radiology
+        # Oncology/Radiology
         "breast": "Oncologist",
         "bi-rads": "Radiologist",
         "mammogram": "Radiologist",
@@ -532,6 +619,27 @@ class MedicalNLP:
                 return spec
                 
         return "General Physician"
+    
+    
+    def process_text(self, text):
+        measurement = self._extract_measurements(text)
+        doc = self.nlp(text)
+        diseases = self._extract_diseases(doc)
+        specialization = self._predict_specialization(doc)
+        return {
+            "measurements": measurements,
+            "diseases": diseases,
+            "specialization": specialization
+        }
+
+    def _extract_diseases(self, doc) -> List[str]:
+        """Extract disease entities from the processed doc"""
+        diseases = []
+        for ent in doc.ents:
+            if ent.label_ == "DISEASE":
+                diseases.append(self._normalize_disease(ent.text))
+        return sorted(set(diseases))
+
 
     def _extract_key_findings(self, text: str) -> str:
         """Extract impression/findings section with improved regex"""
@@ -545,9 +653,9 @@ class MedicalNLP:
         recommendations = []
         for sent in doc.sents:
             if any(token.text.lower() in {"recommend", "suggest", "advise"} for token in sent):
-              recommendations.append(sent.text)
+                recommendations.append(sent.text)
         return recommendations
-
+    
     def fuzzy_match_diseases(self, text: str, threshold: int = 85) -> List[str]:
         """Fallback fuzzy matching for unrecognized disease terms"""
         found = set()
@@ -562,28 +670,27 @@ class MedicalNLP:
                 found.add(match)
                 
         return sorted(found)
+    def process_text(self, text):
+        print(f"\n=== NLP INPUT ===\n{text}\n")
 
+        doc = self.nlp(text)
+        diseases = self._extract_diseases(doc)
+        measurements = self._extract_measurements(text)
+        findings = self._extract_key_findings(text)
+        recommendations = self._extract_recommendations(doc)
+        specialization = self._predict_specialization(doc)
 
-# Singleton instance for application use
-nlp_processor = MedicalNLP()
+        analysis = {
+            "measurements": measurements,
+            "diseases": diseases,
+            "specialization": specialization,
+            "findings": findings,
+            "recommendations": recommendations
+        }
 
+        # Debug print the full analysis
+        print("\n=== NLP ANALYSIS ===")
+        print(json.dumps(analysis, indent=2))  # Pretty-print as JSON
+        print("===================\n")
 
-# Example usage
-if __name__ == "__main__":
-    sample_report = """
-    Patient presents with fatigue and chest pain. 
-    HISTORY: Hypertension, diabetes (poorly controlled).
-    FINDINGS: 
-    - Blood Pressure: 150/95 mmHg
-    - Glucose: 210 mg/dL
-    - Mammogram shows 1.5x2.0 cm mass at 3 o'clock (BI-RADS 4)
-    IMPRESSION: 
-    1. Suspicious breast lesion, recommend biopsy
-    2. Uncontrolled diabetes
-    """
-    
-    results = nlp_processor.process_text(sample_report)
-    
-    from pprint import pprint
-    print("\nMedical Report Analysis Results:")
-    pprint(results)
+        return analysis
