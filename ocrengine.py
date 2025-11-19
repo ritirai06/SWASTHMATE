@@ -1,7 +1,12 @@
 import httpx
 import asyncio
+import os
+from dotenv import load_dotenv
 
-OCRSPACE_API_KEY = "YOUR_OCRSPACE_API_KEY"  # <-- replace with your actual key
+load_dotenv()
+
+# Load OCR.Space API key from environment variable
+OCRSPACE_API_KEY = os.getenv("OCRSPACE_API_KEY", "YOUR_OCRSPACE_API_KEY")
 
 
 async def extract_text_async(image_path, api_key=OCRSPACE_API_KEY):
