@@ -1,6 +1,6 @@
   // Profile Dropdown Functionality
         function toggleProfileDropdown() {
-            const dropdown = document.getElementById('profileDropdown');
+            const dropdown = document.getElementById('profileDropdownModern');
             if (dropdown) {
                 dropdown.classList.toggle('active');
             }
@@ -8,12 +8,11 @@
 
         // Close dropdown when clicking outside
         document.addEventListener('click', function(event) {
-            const dropdown = document.getElementById('profileDropdown');
-            const avatar = document.querySelector('.avatar');
-            const profileContainer = document.querySelector('.profile-container');
+            const dropdown = document.getElementById('profileDropdownModern');
+            const profileContainer = document.getElementById('profileButtonContainer');
             
             // Check if the click is outside the profile container
-            if (!profileContainer.contains(event.target)) {
+            if (profileContainer && !profileContainer.contains(event.target)) {
                 if (dropdown && dropdown.classList.contains('active')) {
                     dropdown.classList.remove('active');
                 }
@@ -21,9 +20,12 @@
         });
 
         // Prevent dropdown from closing when clicking inside it
-        document.getElementById('profileDropdown').addEventListener('click', function(event) {
-            event.stopPropagation();
-        });
+        const profileDropdown = document.getElementById('profileDropdownModern');
+        if (profileDropdown) {
+            profileDropdown.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+        }
 
         // Edit Profile Function
         function editProfile() {
@@ -123,26 +125,36 @@ document.addEventListener('DOMContentLoaded', function () {
     const userData = JSON.parse(localStorage.getItem('userData'));
 
     if (userData && userData.loggedIn) {
-        // Show profile container, hide login button
-        document.querySelector('.profile-container').style.display = 'flex';
-        document.querySelector('.sign').style.display = 'none';
+        // Show profile container, hide login button (check if elements exist)
+        const profileContainer = document.querySelector('.profile-container');
+        const signElement = document.querySelector('.sign');
+        if (profileContainer) profileContainer.style.display = 'flex';
+        if (signElement) signElement.style.display = 'none';
 
-        // Set avatar initial
-        const avatarInitial = userData.name.charAt(0).toUpperCase();
-        document.querySelector('.avatar .m').textContent = avatarInitial;
-        document.querySelector('.profile-avatar').textContent = avatarInitial;
+        // Set avatar initial (check if elements exist)
+        const avatarInitial = userData.name ? userData.name.charAt(0).toUpperCase() : 'U';
+        const avatarM = document.querySelector('.avatar .m');
+        const profileAvatar = document.querySelector('.profile-avatar');
+        if (avatarM) avatarM.textContent = avatarInitial;
+        if (profileAvatar) profileAvatar.textContent = avatarInitial;
 
-        // Set dropdown profile info
-        document.getElementById('dropdown-user-name').textContent = userData.name;
-        document.getElementById('dropdown-user-email').textContent = userData.email;
+        // Set dropdown profile info (check if elements exist)
+        const dropdownName = document.getElementById('dropdown-user-name');
+        const dropdownEmail = document.getElementById('dropdown-user-email');
+        if (dropdownName) dropdownName.textContent = userData.name || 'User';
+        if (dropdownEmail) dropdownEmail.textContent = userData.email || 'user@example.com';
 
         // Also update profile modal view (if visible)
-        document.getElementById('user-name').textContent = userData.name;
-        document.getElementById('user-email').textContent = userData.email;
+        const userName = document.getElementById('user-name');
+        const userEmail = document.getElementById('user-email');
+        if (userName) userName.textContent = userData.name || 'User';
+        if (userEmail) userEmail.textContent = userData.email || 'user@example.com';
     } else {
         // Not logged in: hide profile and show login button
-        document.querySelector('.profile-container').style.display = 'none';
-        document.querySelector('.sign').style.display = 'block';
+        const profileContainer = document.querySelector('.profile-container');
+        const signElement = document.querySelector('.sign');
+        if (profileContainer) profileContainer.style.display = 'none';
+        if (signElement) signElement.style.display = 'block';
     }
 });
 // Load user profile data into form when editing
@@ -183,18 +195,26 @@ function updateProfileUI() {
   const user = JSON.parse(localStorage.getItem('userData'));
 
   if (user && user.loggedIn) {
-    document.querySelector('.profile-container').style.display = 'flex';
-    document.querySelector('.sign').style.display = 'none';
+    const profileContainer = document.querySelector('.profile-container');
+    const signElement = document.querySelector('.sign');
+    if (profileContainer) profileContainer.style.display = 'flex';
+    if (signElement) signElement.style.display = 'none';
 
-    const initial = user.name.charAt(0).toUpperCase();
-    document.querySelector('.avatar .m').textContent = initial;
-    document.querySelector('.profile-avatar').textContent = initial;
+    const initial = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+    const avatarM = document.querySelector('.avatar .m');
+    const profileAvatar = document.querySelector('.profile-avatar');
+    if (avatarM) avatarM.textContent = initial;
+    if (profileAvatar) profileAvatar.textContent = initial;
 
-    document.getElementById('dropdown-user-name').textContent = user.name;
-    document.getElementById('dropdown-user-email').textContent = user.email;
+    const dropdownName = document.getElementById('dropdown-user-name');
+    const dropdownEmail = document.getElementById('dropdown-user-email');
+    if (dropdownName) dropdownName.textContent = user.name || 'User';
+    if (dropdownEmail) dropdownEmail.textContent = user.email || 'user@example.com';
   } else {
-    document.querySelector('.profile-container').style.display = 'none';
-    document.querySelector('.sign').style.display = 'block';
+    const profileContainer = document.querySelector('.profile-container');
+    const signElement = document.querySelector('.sign');
+    if (profileContainer) profileContainer.style.display = 'none';
+    if (signElement) signElement.style.display = 'block';
   }
 }
 
@@ -205,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    const skipPages = ['/upload', '/upload.html', '/about', '/about.html','/','/index.html']; // pages that DON'T require login
+    const skipPages = ['/upload', '/prescription-reader.html', '/about', '/about.html','/','/index.html']; // pages that DON'T require login
     const path = window.location.pathname;
 
     const userData = JSON.parse(localStorage.getItem('userData'));

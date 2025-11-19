@@ -87,7 +87,7 @@ AWS_SECRET_KEY=your_aws_secret_key
 6. **Run the Flask app**
 
 ```bash
-python app1.py
+python app.py
 ```
 
 7. Open your browser at:
@@ -118,10 +118,10 @@ http://127.0.0.1:5000/
 
 ```
 medco-analyzer/
-├─ app1.py                # Main Flask application
-├─ nlpengine.py           # NLP processing module
-├─ nlp.py                 # Custom MedicalNLP class
-├─ recom_engine.py        # Recommendations engine
+├─ app.py                 # Main Flask application
+├─ text_analyzer.py       # Medical text analysis and NLP processing
+├─ medical_nlp.py         # Medical NLP class with MedSpaCy
+├─ recommendations.py     # Medical symptoms and recommendations engine
 ├─ uploads/               # Uploaded files & results
 ├─ templates/             # HTML templates
 ├─ static/

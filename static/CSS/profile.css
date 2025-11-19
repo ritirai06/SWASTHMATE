@@ -1,0 +1,139 @@
+/* Profile Dropdown Modern Styles */
+.profile-container-modern {
+    position: relative;
+}
+
+#profileButtonContainer {
+    display: none;
+    position: relative;
+    visibility: hidden;
+}
+
+#profileButtonContainer[style*="display: flex"],
+#profileButtonContainer[style*="display:block"] {
+    display: flex !important;
+    visibility: visible !important;
+}
+
+.profile-dropdown-modern {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    min-width: 280px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    border: 1px solid var(--color-slate-200);
+}
+
+.profile-dropdown-modern.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-header-modern {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-slate-200);
+}
+
+.profile-info-modern {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-avatar-modern {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-blue-600) 0%, var(--color-purple-600) 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.profile-details-modern h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-slate-900);
+    margin: 0 0 0.25rem 0;
+}
+
+.profile-details-modern p {
+    font-size: 0.875rem;
+    color: var(--color-slate-600);
+    margin: 0;
+}
+
+.profile-menu-modern {
+    padding: 0.5rem;
+}
+
+.profile-menu-item-modern {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: var(--color-slate-700);
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.profile-menu-item-modern:hover {
+    background: var(--color-slate-50);
+    color: var(--color-blue-600);
+}
+
+.profile-menu-item-modern.logout-modern {
+    color: var(--color-red-500);
+}
+
+.profile-menu-item-modern.logout-modern:hover {
+    background: var(--color-red-50);
+    color: var(--color-red-600);
+}
+
+.profile-menu-item-modern i {
+    width: 20px;
+    text-align: center;
+}
+
+/* Login Button Modern */
+.login-btn-modern {
+    padding: 0.5rem 1rem;
+    background-color: var(--color-blue-400);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.login-btn-modern:hover {
+    background-color: var(--color-blue-500);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+

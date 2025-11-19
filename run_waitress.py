@@ -1,6 +1,7 @@
+# run_waitress.py - Production server runner using Waitress
 from waitress import serve
-from app1 import app   # yaha app1.py se Flask app import kar rahe hain
+from app import app   # Import Flask app from app.py
 
-if _name_ == "_main_":
-    print("🚀 Starting Medco Analyzer on Waitress server...")
+if __name__ == "__main__":
+    print("🚀 Starting Swasthmate on Waitress server...")
     serve(app, host="0.0.0.0", port=8080)
