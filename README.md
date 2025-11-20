@@ -1,6 +1,6 @@
-# MedCo Analyzer 🩺
+# SWASTHMATE 🩺
 
-**MedCo Analyzer** is a secure and intelligent medical report analysis system that helps patients, doctors, and healthcare professionals extract actionable insights from medical reports. It leverages **OCR**, **NLP**, and **AI chat assistants** to provide clear, understandable medical information along with personalized recommendations.
+**SWASTHMATE** is a secure and intelligent medical report analysis system that helps patients, doctors, and healthcare professionals extract actionable insights from medical reports. It leverages **OCR**, **NLP**, and **AI chat assistants** to provide clear, understandable medical information along with personalized recommendations.
 
 This system is designed to be **secure**, **scalable**, and **easy to use**, with all API keys protected via environment variables.
 
@@ -13,6 +13,7 @@ This system is designed to be **secure**, **scalable**, and **easy to use**, wit
 * **Medical NLP Analysis:** Extracts diseases, findings, measurements, and patient information using a custom **NLP engine**.
 * **AI Recommendations:** Provides personalized suggestions for symptoms using a recommendation engine.
 * **AI Q&A Chatbot:** Uses **Google Gemini** and **Cohere** APIs to answer medical questions in English or Hindi with structured, emoji-rich responses.
+* **Voice Interaction:** Speech-to-text functionality for hands-free interaction with the medical assistant.
 * **Frontend Dashboard:** Clean interface for uploading reports, viewing results, and interacting with the AI assistant.
 * **Secure API Keys:** All API keys (Azure, Cohere, Gemini, AWS) are loaded securely from `.env`.
 
@@ -33,6 +34,7 @@ This system is designed to be **secure**, **scalable**, and **easy to use**, wit
 * **OCR:** Azure Form Recognizer
 * **NLP & AI:** Custom `MedicalNLP`, AWS NLP, Google Gemini API, Cohere API
 * **Frontend:** HTML, CSS, JavaScript
+* **Speech Recognition:** Web Speech API
 * **Database / Storage:** Local JSON results storage (can be extended to MongoDB)
 * **Security:** Environment variables for all API keys
 
@@ -43,8 +45,8 @@ This system is designed to be **secure**, **scalable**, and **easy to use**, wit
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/your-username/medco-analyzer.git
-cd medco-analyzer
+git clone https://github.com/ritirai06/SWASTHMATE.git
+cd SWASTHMATE
 ```
 
 2. **Create a virtual environment**
@@ -103,6 +105,7 @@ http://127.0.0.1:5000/
 * **Upload a report:** Navigate to the upload page and upload your medical report.
 * **View analysis:** Get extracted text, detected diseases, measurements, and recommendations.
 * **Ask AI:** Use the chatbot to ask questions about conditions, treatments, or medical advice.
+* **Voice Input:** Click the microphone button in the medical assistant to use speech-to-text for hands-free interaction.
 
 ---
 
@@ -117,13 +120,15 @@ http://127.0.0.1:5000/
 ## 📂 Folder Structure
 
 ```
-medco-analyzer/
+SWASTHMATE/
 ├─ app.py                 # Main Flask application
 ├─ text_analyzer.py       # Medical text analysis and NLP processing
 ├─ medical_nlp.py         # Medical NLP class with MedSpaCy
 ├─ recommendations.py     # Medical symptoms and recommendations engine
 ├─ uploads/               # Uploaded files & results
 ├─ templates/             # HTML templates
+│  ├─ medical-assistant.html  # AI medical assistant with voice input
+│  └─ ...
 ├─ static/
 │  ├─ css/
 │  └─ js/
@@ -145,6 +150,8 @@ medco-analyzer/
   * Treatment
   * When to see a doctor
 
+* **Speech-to-Text:** Voice input support for medical queries with multi-language recognition.
+
 ---
 
 ## ⚡ Future Improvements
@@ -153,6 +160,7 @@ medco-analyzer/
 * User authentication for personalized medical dashboards.
 * Multi-language support beyond English and Hindi.
 * Mobile-friendly frontend design.
+* Enhanced voice recognition accuracy.
 
 ---
 
@@ -167,4 +175,3 @@ For support or inquiries:
 ## 📄 License
 
 This project is licensed under the **MIT License**.
-
