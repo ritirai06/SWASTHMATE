@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swasthmate - Contact</title>
+        <!-- Import Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <!-- Import Material Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/legacy.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+     <style>
+         @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Special+Elite&display=swap'); 
+
+:root { */
+    Modern Color Palette */
+   --primary: #2563eb;
+   --primary-light: #3b82f6;
+   --primary-dark: #1d4ed8;
+   --secondary: #10b981;
+   --secondary-light: #34d399;
+   --secondary-dark: #047857;
+   --danger: #ef4444;
+   --warning: #f59e0b;
+   --success: #10b981;
+   --info: #0ea5e9;
+   --background: #f8fafc;
+   --card-bg: #ffffff;
+   --text-primary: #1e293b;
+   --text-secondary: #64748b;
+   --text-light: #94a3b8;
+   --border: #e2e8f0;
+   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+   --radius-sm: 0.25rem;
+   --radius: 0.5rem;
+   --radius-lg: 0.75rem;
+   --transition: all 0.2s ease;
+}
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+ section {
+  display: none;
+ }
+
+ section.active {
+  display: block;
+ }
+
+ section.features {
+  display: block;
+ }
+ section.team-section{
+    display:block;
+    margin-top: 20px;
+ }
+
+ /* Disclaimer Section */
+ .disclaimer-section-contact {
+     margin-top: 3rem;
+     padding: 2rem 1rem;
+ }
+
+ .container-disclaimer-contact {
+     max-width: 1280px;
+     margin: 0 auto;
+     padding: 0 1rem;
+ }
+
+ .disclaimer-box-contact {
+     padding: 1.5rem;
+     background: #fffbeb;
+     border: 1px solid #fde68a;
+     border-radius: 0.75rem;
+     max-width: 80rem;
+     margin: 0 auto;
+ }
+
+ .disclaimer-text-contact {
+     color: #78350f;
+     text-align: center;
+     line-height: 1.6;
+ }
+
+ .disclaimer-icon-contact {
+     margin-right: 0.5rem;
+ }
+
+ @media (max-width: 768px) {
+     .disclaimer-box-contact {
+         padding: 1rem;
+     }
+
+     .disclaimer-text-contact {
+         font-size: 0.875rem;
+     }
+ }
+
+
+
+body {
+   background-color:#ffffff;
+   color: var(--text-primary);
+   line-height: 1.6;
+   font-size: 16px;
+   background-color:azure;
+}
+
+.container {
+   /* max-width: 1280px; */
+   margin: 0 auto;
+   padding: 0 1.5rem;
+   text-align: left;
+   
+   /* background-color:#725f9d;  */
+
+}
+.header{
+   background-color:#ecf1f4; 
+
+}
+/* Header and Navigation */
+
+.login-btn {
+    margin-left: auto;
+ padding: 8px 16px; 
+    background-color: #1d4ed8; /* Bootstrap blue */
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.login-btn:hover {
+    background-color:#1d4ed8;
+}
+
+.header {
+   background-color: var(--card-bg);
+   box-shadow: var(--shadow);
+   position: sticky;
+   top: 0;
+   z-index: 100;
+}
+
+.navbar {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 1rem 0;
+   height: 4rem;
+}
+
+.logo {
+   display: flex;
+   align-items: center;
+   font-size: 1.5rem;
+   font-weight: 700;
+   color: var(--primary);
+   text-decoration: none;
+}
+
+.logo-icon {
+   margin-right: 0.75rem;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 2.5rem;
+   height: 2.5rem;
+   /* background-color: var(--primary-light); */
+   /* background-color: ; */
+   /* color: white; */
+   color: black;
+   border-radius: var(--radius);
+}
+
+.medi {
+   color: #1d4ed8;
+   font-size:30px;
+   /* background-color: #ef4444; */
+
+}
+
+.medicon {
+   height: 80px;
+}
+
+.nav-links {
+   display: flex;
+   gap: 2rem;
+   align-items: center;
+   margin-right: 50px;
+   margin-left: 300px;
+
+   
+  
+   
+}
+
+/* Show the about view when needed */
+#about-view.active {
+    display: block !important;
+}
+
+.nav-link {
+   color:#000000;
+   text-decoration: none;
+   font-weight: 600;
+   transition: var(--transition);
+   padding: 0.5rem 0;
+   position: relative;
+}
+
+.nav-link:hover {
+   color: var(--primary);
+}
+
+.nav-link.active {
+   /* color: var(--primary); */
+   font-weight: 600;
+}
+
+.nav-link:hover {
+   color: #263956;
+   text-decoration: underline;
+}
+
+.nav-link.active::after {
+   content: '';
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   height: 2px;
+   /* background-color: var(--primary); */
+   border-radius: 2px;
+}
+
+.user-menu {
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+}
+/* Profile Dropdown Styles */
+.user-menu {
+    position: relative;
+}
+
+
+
+.avatar {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.avatar:hover {
+
+    transform: scale(1.05);
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(53, 83, 213, 0.3);
+}
+
+#profileDropdown {
+    display: none;
+}
+#profileDropdown.active {
+    display: block;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    min-width: 280px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    border: 1px solid #e2e8f0;
+}
+
+.profile-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 15px;
+    width: 12px;
+    height: 12px;
+    background: rgb(255, 255, 255);
+    border-left: 1px solid #e2e8f0;
+    border-top: 1px solid #e2e8f0;
+    transform: rotate(45deg);
+}
+
+.profile-header {
+    padding: 20px;
+    border-bottom: 1px solid #f1f5f9;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 12px 12px 0 0;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.profile-details h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.profile-details p {
+    margin: 4px 0 0 0;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.profile-menu {
+    padding: 12px 0;
+}
+
+.profile-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #374151;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+}
+
+.profile-menu-item:hover {
+    background: #f8fafc;
+    color: #667eea;
+}
+
+.profile-menu-item i {
+    margin-right: 12px;
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+}
+
+.profile-menu-item.logout {
+    color: #dc2626;
+    border-top: 1px solid #f1f5f9;
+}
+
+.profile-menu-item.logout:hover {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+/* Profile Modal */
+#profile-view {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+#profile-view.active {
+    display: flex;
+}
+
+.profile-modal {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.close-profile {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.close-profile:hover {
+    color: #dc2626;
+}
+
+
+
+
+
+
+/* contact page ki css */
+
+.contain {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.header01 {
+    text-align: center;
+    margin-bottom: 40px;
+    
+}
+
+h4{
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #7f8c8d;
+    font-size: 18px;
+}
+
+.contact-form {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.contact-info {
+    margin-top: 40px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 20px 10px;
+    }
+    
+    .contact-form {
+        padding: 20px;
+    }
+}
+
+#name:hover{
+    border: 1px solid blue ;
+    /* border-radius:  */
+}
+#email:hover{
+    border: 1px solid blue;
+}
+
+#query:hover{
+    border: 1px solid blue;
+}
+
+/* yahi ktm ho gyi contact page  */
+
+
+
+
+
+
+
+
+
+ /* :root {
+    Modern Color Palette --primary: #2563eb;
+    --primary-light: #3b82f6;
+    --primary-dark: #1d4ed8;
+    --secondary: #10b981;
+    --secondary-light: #34d399;
+    --secondary-dark: #047857;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --success: #10b981;
+    --info: #0ea5e9;
+    --background: #f8fafc;
+    --card-bg: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-light: #94a3b8;
+    --border: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --radius-sm: 0.25rem;
+    --radius: 0.5rem;
+    --radius-lg: 0.75rem;
+    --transition: all 0.2s ease;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif; }*/
+  
+ body {
+     background-color: #ffffff;
+     color: var(--text-primary);
+     line-height: 1.6;
+     font-size: 16px;
+     background-color: azure;
+ }
+
+ .container {
+     /* max-width: 1280px; */
+     width: 100%;
+     margin: 0 auto;
+     padding: 0 1.5rem;
+     text-align: left;
+     /* background-color:#725f9d;  */
+
+ }
+
+ .header {
+     background-color: #ecf1f4;
+
+ }
+
+ /* Header and Navigation */
+
+ .login-btn {
+     margin-left: auto;
+     padding: 8px 16px;
+     background-color: #1d4ed8;
+     /* Bootstrap blue */
+     color: white;
+     text-decoration: none;
+     border-radius: 10px;
+     font-weight: bold;
+
+ }
+ .login-btn {
+    cursor: pointer;
+}
+
+
+ .login-btn:hover {
+     background-color: #1d4ed8;
+ }
+
+ header {
+     background-color: var(--card-bg);
+     box-shadow: var(--shadow);
+     position: sticky;
+     top: 0;
+     z-index: 100;
+ }
+
+ .navbar {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding: 1rem 0;
+     height: 4rem;
+ }
+
+ .logo {
+     display: flex;
+     align-items: center;
+     font-size: 1.5rem;
+     font-weight: 700;
+     color: var(--primary);
+     text-decoration: none;
+ }
+
+ .logo-icon {
+     margin-right: 0.75rem;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     width: 2.5rem;
+     height: 2.5rem;
+     /* background-color: var(--primary-light); */
+     /* background-color: ; */
+     /* color: white; */
+     color: black;
+     border-radius: var(--radius);
+ }
+
+ .medi {
+     color: #1d4ed8;
+     font-size: 30px;
+     /* background-color: #ef4444; */
+
+ }
+
+ .medicon {
+     height: 80px;
+ }
+
+ .nav-links {
+     display: flex;
+     gap: 2rem;
+     align-items: center;
+     margin-right: 50px;
+     margin-left: 300px;
+ }
+
+
+
+ .nav-link {
+     color: #000000;
+     text-decoration: none;
+     font-weight: 600;
+     transition: var(--transition);
+     padding: 0.5rem 0;
+     position: relative;
+ }
+
+ .nav-link:hover {
+     color: var(--primary);
+ }
+
+ .nav-link.active {
+     /* color: var(--primary); */
+     font-weight: 600;
+ }
+
+ .nav-link:hover {
+     color: #263956;
+     text-decoration: underline;
+ }
+
+ .nav-link.active::after {
+     content: '';
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     width: 100%;
+     height: 2px;
+     /* background-color: var(--primary); */
+     border-radius: 2px;
+ }
+
+ .user-menu {
+     display: flex;
+     align-items: center;
+     gap: 1rem;
+ }
+
+
+ .avatar {
+
+     width: 2.5rem;
+     height: 2.5rem;
+     border-radius: 50%;
+     /* background-color: var(--primary-light); */
+     /* color: white; */
+     color: rgb(255, 255, 255);
+     background-color: #1d4ed8;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     /* font-weight: 600; */
+     cursor: pointer;
+ }
+
+ .m {
+     font-family: "Poppins", sans-serif;
+     font-weight: 600;
+     font-style: normal;
+ }
+
+ .notifications {
+     position: relative;
+     cursor: pointer;
+ }
+
+ .notify {
+     color: #000000;
+ }
+
+
+     </style>
+    </head>
+    <body>
+    <!-- Header -->
+    <header class="header-modern">
+        <div class="container-modern">
+            <div class="navbar-modern">
+                <!-- Logo -->
+                <div class="logo-modern">
+                    <div class="logo-icon-modern">
+                        <img src="{{ url_for('static', filename='logo.png') }}" alt="Swasthmate Logo">
+                    </div>
+                    <span class="logo-text-modern">Swasth<span class="mate-part">mate</span></span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="nav-modern">
+                    <a href="/" class="nav-link-modern">Home</a>
+                    <a href="/upload" class="nav-link-modern">Prescription Reader</a>
+                    <a href="/MedAssist" class="nav-link-modern">MedAssist</a>
+                    <a href="/about" class="nav-link-modern" onclick="window.location.href='/about'; return true;">About Us</a>
+                    <a href="/contact" class="nav-link-modern" onclick="window.location.href='/contact'; return true;">Contact</a>
+                </nav>
+
+                <!-- Right Side Actions -->
+                <div class="header-actions-modern">
+                    <div id="loginButtonContainer">
+                        <a href="/login" class="login-btn-modern">Log In / Sign up</a>
+                    </div>
+                    <div id="profileButtonContainer" class="profile-container-modern" style="display: none;">
+                        <button class="user-icon-btn" onclick="toggleProfileDropdown()">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <div class="profile-dropdown-modern" id="profileDropdownModern">
+                            <div class="profile-header-modern">
+                                <div class="profile-info-modern">
+                                    <div class="profile-avatar-modern" id="profileAvatarModern">U</div>
+                                    <div class="profile-details-modern">
+                                        <h3 id="dropdown-user-name-modern">User</h3>
+                                        <p id="dropdown-user-email-modern">user@example.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-menu-modern">
+                                <a href="#" class="profile-menu-item-modern" onclick="editProfile(); return false;">
+                                    <i class="fas fa-edit"></i>
+                                    Edit Profile
+                                </a>
+                                <button class="profile-menu-item-modern logout-modern" onclick="handleLogout()">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="menu-toggle" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+                
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <nav class="mobile-nav">
+                    <a href="/" class="mobile-nav-link" onclick="window.location.href='/'; return true;">Home</a>
+                    <a href="/upload" class="mobile-nav-link" onclick="window.location.href='/upload'; return true;">Prescription Reader</a>
+                    <a href="/MedAssist" class="mobile-nav-link" onclick="window.location.href='/MedAssist'; return true;">MedAssist</a>
+                    <a href="/about" class="mobile-nav-link" onclick="window.location.href='/about'; return true;">About Us</a>
+                    <a href="/contact" class="mobile-nav-link" onclick="window.location.href='/contact'; return true;">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+
+    <!-- Profile Modal -->
+    <section id="profile-view" style="display: none;">
+        <div class="profile-modal">
+            <button class="close-profile" onclick="closeProfile()">&times;</button>
+            <h2>My Profile</h2>
+           <form id="edit-profile-form">
+      <p><strong>Name:</strong> <input type="text" id="edit-name" required></p>
+      <p><strong>Email:</strong> <input type="email" id="edit-email" required></p>
+      <p><strong>Password:</strong> <input type="password" id="edit-password" required></p>
+      <button type="submit" class="demo-button">Save Changes</button>
+    </form>
+            
+    </section>
+
+
+ <main class="container" style="padding-top: 80px;">
+
+    <!-- contact yaha se start hai  -->
+     
+  <section id="contact-view" class="active">
+    <div class="contain">
+        <!-- <header class="header01"> -->
+            <div class="header01">
+            <h4>Contact Us</h4>
+            <p class="subtitle">We'd love to hear from you. Please fill out the form below.</p>
+        </div>
+        
+        <!-- </header> -->
+        
+        <div class="contact-form">
+            <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+              
+                <div class="form-group">
+                    <input type="hidden" name="access_key" value="6457272e-2663-488d-9f32-7341f9518b21">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Name" required>
+                
+                
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                
+                    <label for="query">Write Your Query</label>
+                    <textarea id="query" name="query" placeholder="Hii Write Your All Queries Here" required></textarea>
+                </div>
+                
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+        
+        <div class="contact-info">
+            <p>You can also reach us at: <strong>contact@swasthmate.com</strong></p>
+        </div>
+    </div>
+</section>
+</section>
+</main>
+    <!-- yaha se ktm h contact html  -->
+             
+        
+    <!-- Disclaimer -->
+    <div class="disclaimer-section-contact">
+        <div class="container-disclaimer-contact">
+            <div class="disclaimer-box-contact">
+                <p class="disclaimer-text-contact">
+                    <span class="disclaimer-icon-contact">⚠️</span>
+                    <strong>Medical Disclaimer:</strong> This tool is for informational purposes only and should not replace professional medical advice. Always consult with your healthcare provider or pharmacist for medical advice and prescription verification. For emergencies, contact emergency services immediately.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-modern">
+        <div class="container-modern">
+            <div class="footer-grid-modern">
+                <!-- Brand -->
+                <div class="footer-brand">
+                    <div class="footer-logo-modern">
+                        <div class="logo-icon-modern">
+                            <img src="{{ url_for('static', filename='logo.png') }}" alt="Swasthmate Logo">
+                        </div>
+                        <span class="logo-text-modern">Swasth<span class="mate-part">mate</span></span>
+                    </div>
+                    <p class="footer-description-modern">
+                        AI-powered medical report analysis for better health insights.
+                    </p>
+                    <div class="social-links-modern">
+                        <a href="#" class="social-link-modern"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link-modern"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link-modern"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link-modern"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links-modern">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/upload">Prescription Reader</a></li>
+                        <li><a href="/MedAssist">MedAssist</a></li>
+                        <li><a href="/about">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Services -->
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul class="footer-links-modern">
+                        <li><a href="/upload">Prescription Reader</a></li>
+                        <li><a href="/MedAssist">MedAssist</a></li>
+                        <li><a href="/">Report Analysis</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-contact-modern">
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>support@medscan.ai</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+91-9005529331</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>India</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bottom Bar -->
+            <div class="footer-bottom-modern">
+                <p>© 2025 Swasthmate. All rights reserved.</p>
+                <div class="footer-legal-links-modern">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        // Check if user is logged in
+        function checkLoginStatus() {
+            const userData = localStorage.getItem('userData');
+            const loginContainer = document.getElementById('loginButtonContainer');
+            const profileContainer = document.getElementById('profileButtonContainer');
+            
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    if (user.loggedIn) {
+                        if (loginContainer) loginContainer.style.display = 'none';
+                        if (profileContainer) {
+                            profileContainer.style.display = 'flex';
+                            profileContainer.style.alignItems = 'center';
+                        }
+                        
+                        const avatar = document.getElementById('profileAvatarModern');
+                        const nameEl = document.getElementById('dropdown-user-name-modern');
+                        const emailEl = document.getElementById('dropdown-user-email-modern');
+                        
+                        if (avatar) avatar.textContent = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+                        if (nameEl) nameEl.textContent = user.name || 'User';
+                        if (emailEl) emailEl.textContent = user.email || 'user@example.com';
+                    } else {
+                        if (loginContainer) loginContainer.style.display = 'block';
+                        if (profileContainer) profileContainer.style.display = 'none';
+                    }
+                } catch (e) {
+                    if (loginContainer) loginContainer.style.display = 'block';
+                    if (profileContainer) profileContainer.style.display = 'none';
+                }
+            } else {
+                if (loginContainer) loginContainer.style.display = 'block';
+                if (profileContainer) profileContainer.style.display = 'none';
+            }
+        }
+
+        function toggleProfileDropdown() {
+            const dropdown = document.getElementById('profileDropdownModern');
+            if (dropdown) dropdown.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            const profileContainer = document.getElementById('profileButtonContainer');
+            const dropdown = document.getElementById('profileDropdownModern');
+            if (profileContainer && dropdown && !profileContainer.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        function handleLogout() {
+            localStorage.removeItem('userData');
+            window.location.href = '/';
+        }
+
+        function editProfile() {
+            const userData = localStorage.getItem('userData');
+            const profileView = document.getElementById('profile-view');
+            const dropdown = document.getElementById('profileDropdownModern');
+            
+            if (dropdown) dropdown.classList.remove('active');
+            
+            if (userData) {
+                const user = JSON.parse(userData);
+                const nameInput = document.getElementById('edit-name');
+                const emailInput = document.getElementById('edit-email');
+                const passwordInput = document.getElementById('edit-password');
+                
+                if (nameInput) nameInput.value = user.name || '';
+                if (emailInput) emailInput.value = user.email || '';
+                if (passwordInput) passwordInput.value = user.password || '';
+            }
+            
+            if (profileView) {
+                profileView.style.display = 'flex';
+                profileView.classList.add('active');
+            }
+        }
+
+        function closeProfile() {
+            const profileView = document.getElementById('profile-view');
+            if (profileView) {
+                profileView.style.display = 'none';
+                profileView.classList.remove('active');
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu) menu.classList.toggle('active');
+        }
+
+        const editProfileForm = document.getElementById('edit-profile-form');
+        if (editProfileForm) {
+            editProfileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('edit-name').value;
+                const email = document.getElementById('edit-email').value;
+                const password = document.getElementById('edit-password').value;
+                
+                if (!name || !email) {
+                    alert('Please fill in name and email');
+                    return;
+                }
+                
+                const userData = localStorage.getItem('userData');
+                const existingUser = userData ? JSON.parse(userData) : {};
+                
+                const updatedUser = {
+                    name: name,
+                    email: email,
+                    password: password || existingUser.password || '',
+                    loggedIn: true
+                };
+                
+                localStorage.setItem('userData', JSON.stringify(updatedUser));
+                checkLoginStatus();
+                closeProfile();
+                alert('Profile updated successfully!');
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+        });
+    </script>
+    </body>
+    </html>
+    
