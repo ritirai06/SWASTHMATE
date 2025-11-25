@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swasthmate - About Us</title>
+        <!-- Import Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <!-- Import Material Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/legacy.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+     <style> 
+
+         @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Special+Elite&display=swap'); 
+
+:root { */
+    Modern Color Palette */
+   --primary: #2563eb;
+   --primary-light: #3b82f6;
+   --primary-dark: #1d4ed8;
+   --secondary: #10b981;
+   --secondary-light: #34d399;
+   --secondary-dark: #047857;
+   --danger: #ef4444;
+   --warning: #f59e0b;
+   --success: #10b981;
+   --info: #0ea5e9;
+   --background: #f8fafc;
+   --card-bg: #ffffff;
+   --text-primary: #1e293b;
+   --text-secondary: #64748b;
+   --text-light: #94a3b8;
+   --border: #e2e8f0;
+   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+   --radius-sm: 0.25rem;
+   --radius: 0.5rem;
+   --radius-lg: 0.75rem;
+   --transition: all 0.2s ease;
+}
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+ section {
+  display: none;
+ }
+
+ section.active,
+ #about-view,
+ section.about-section,
+ section.features,
+ section.team-section {
+  display: block !important;
+  visibility: visible !important;
+ }
+
+ #about-view {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+ }
+
+ section.features {
+  display: block;
+ }
+
+ /* Disclaimer Section */
+ .disclaimer-section-about {
+     margin-top: 3rem;
+     padding: 2rem 1rem;
+ }
+
+ .container-disclaimer-about {
+     max-width: 1280px;
+     margin: 0 auto;
+     padding: 0 1rem;
+ }
+
+ .disclaimer-box-about {
+     padding: 1.5rem;
+     background: #fffbeb;
+     border: 1px solid #fde68a;
+     border-radius: 0.75rem;
+     max-width: 80rem;
+     margin: 0 auto;
+ }
+
+ .disclaimer-text-about {
+     color: #78350f;
+     text-align: center;
+     line-height: 1.6;
+ }
+
+ .disclaimer-icon-about {
+     margin-right: 0.5rem;
+ }
+
+ @media (max-width: 768px) {
+     .disclaimer-box-about {
+         padding: 1rem;
+     }
+
+     .disclaimer-text-about {
+         font-size: 0.875rem;
+     }
+ }
+ section.team-section{
+    display:block;
+    margin-top: 20px;
+ }
+
+
+
+body {
+   background-color:#ffffff;
+   color: var(--text-primary);
+   line-height: 1.6;
+   font-size: 16px;
+   background-color:azure;
+   padding-top: 64px; /* Account for fixed header */
+}
+
+.container {
+   /* max-width: 1280px; */
+   margin: 0 auto;
+   padding: 0 1.5rem;
+   text-align: left;
+   
+   /* background-color:#725f9d;  */
+
+}
+.header{
+   background-color:#ecf1f4; 
+
+}
+/* Header and Navigation */
+
+.login-btn {
+    margin-left: auto;
+ padding: 8px 16px; 
+    background-color: #1d4ed8; /* Bootstrap blue */
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.login-btn:hover {
+    background-color:#1d4ed8;
+}
+
+.header {
+   background-color: var(--card-bg);
+   box-shadow: var(--shadow);
+   position: sticky;
+   top: 0;
+   z-index: 100;
+}
+
+.navbar {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 1rem 0;
+   height: 4rem;
+}
+
+.logo {
+   display: flex;
+   align-items: center;
+   font-size: 1.5rem;
+   font-weight: 700;
+   color: var(--primary);
+   text-decoration: none;
+}
+
+.logo-icon {
+   margin-right: 0.75rem;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 2.5rem;
+   height: 2.5rem;
+   /* background-color: var(--primary-light); */
+   /* background-color: ; */
+   /* color: white; */
+   color: black;
+   border-radius: var(--radius);
+}
+
+.medi {
+   color: #1d4ed8;
+   font-size:30px;
+   /* background-color: #ef4444; */
+
+}
+
+.medicon {
+   height: 80px;
+}
+
+.nav-links {
+   display: flex;
+   gap: 2rem;
+   align-items: center;
+   margin-right: 50px;
+   margin-left: 300px;
+
+   
+  
+   
+}
+
+/* Show the about view when needed */
+#about-view.active {
+    display: block !important;
+}
+
+.nav-link {
+   color:#000000;
+   text-decoration: none;
+   font-weight: 600;
+   transition: var(--transition);
+   padding: 0.5rem 0;
+   position: relative;
+}
+
+.nav-link:hover {
+   color: var(--primary);
+}
+
+.nav-link.active {
+   /* color: var(--primary); */
+   font-weight: 600;
+}
+
+.nav-link:hover {
+   color: #263956;
+   text-decoration: underline;
+}
+
+.nav-link.active::after {
+   content: '';
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   height: 2px;
+   /* background-color: var(--primary); */
+   border-radius: 2px;
+}
+
+.user-menu {
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+}
+/* Profile Dropdown Styles */
+.user-menu {
+    position: relative;
+}
+
+
+
+.avatar {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.avatar:hover {
+
+    transform: scale(1.05);
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(53, 83, 213, 0.3);
+}
+
+#profileDropdown {
+    display: none;
+}
+#profileDropdown.active {
+    display: block;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    min-width: 280px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    border: 1px solid #e2e8f0;
+}
+
+.profile-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 15px;
+    width: 12px;
+    height: 12px;
+    background: rgb(255, 255, 255);
+    border-left: 1px solid #e2e8f0;
+    border-top: 1px solid #e2e8f0;
+    transform: rotate(45deg);
+}
+
+.profile-header {
+    padding: 20px;
+    border-bottom: 1px solid #f1f5f9;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 12px 12px 0 0;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.profile-details h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.profile-details p {
+    margin: 4px 0 0 0;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.profile-menu {
+    padding: 12px 0;
+}
+
+.profile-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #374151;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+}
+
+.profile-menu-item:hover {
+    background: #f8fafc;
+    color: #667eea;
+}
+
+.profile-menu-item i {
+    margin-right: 12px;
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+}
+
+.profile-menu-item.logout {
+    color: #dc2626;
+    border-top: 1px solid #f1f5f9;
+}
+
+.profile-menu-item.logout:hover {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+/* Profile Modal */
+#profile-view {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+#profile-view.active {
+    display: flex;
+}
+
+.profile-modal {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.close-profile {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.close-profile:hover {
+    color: #dc2626;
+}
+
+
+
+
+
+
+.footer {
+    text-align: center;
+    font-size: 0.95em;
+    color: #666;
+    margin-top: 40px;
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid #1d4ed8;
+}
+
+@media (max-width: 768px) {
+    .measurements-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    h3 {
+        font-size: 1.8em;
+    }
+    
+    .header-icon01 {
+        font-size: 28px;
+    }
+}
+
+
+/* Features Section */
+.features {
+    padding: 6rem 0;
+    background-color: var(--background);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-title h2 {
+    font-size: 2.25rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.section-title p {
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap:  6rem;
+    /* gap: 20px 100px; */
+}
+
+.feature-card {
+    background-color:#e2e5e8;
+    /* border-radius: 25%; */
+    border-radius: 12%;
+    padding: 2rem;
+    /* box-shadow: var(--shadow); */
+    box-shadow: 10px 5px 5px  #8a9fd8; ;
+    text-align: center;
+    transition: var(--transition);
+    border: 1px solid var(--border);
+    height: 300px;
+    width: 430px;
+  
+}
+
+/* .feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+} */
+
+.feature-icon {
+    width: 3rem;
+    height: 3rem;
+    /* background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%); */
+    color: white;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    margin: 0 auto 1.5rem;
+      
+}
+
+.feature-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+/* .hero {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25vh;
+  } */
+  
+  .slider {
+width: 1600px;
+height: 800px;
+overflow: hidden;
+border-radius: 10px;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.slides {
+display: flex;
+width: 100%; /* 3 slides */
+animation: slide 9s infinite;
+}
+
+.slide {
+width: 100%;
+flex-shrink: 0;
+object-fit: fill;
+
+}
+
+@keyframes slide {
+  0%   { transform: translateX(0%); }
+  33%  { transform: translateX(0%); }
+  36%  { transform: translateX(-100%); }
+  66%  { transform: translateX(-100%); }
+  69%  { transform: translateX(-200%); }
+  100% { transform: translateX(-200%); }
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.4);
+  }
+  
+  .modal-slide {
+    background: #fff;
+    width: 90%;
+    max-width: 500px;
+    height: auto;
+    padding: 2rem;
+    border-radius: 10px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) translateX(100%);
+    box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .modal.show .modal-slide {
+    transform: translateY(-50%) translateX(0);
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+/* Footer */
+.back{
+    margin-left: 10px;
+}
+footer {
+    background-color: #022535;
+    color: #f8fafc;
+    padding: 4rem 0 2rem;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+}
+
+.footer-section h3 {
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    color: white;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: var(--transition);
+    font-size: 0.95rem;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-newsletter p {
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.newsletter-form {
+    display: flex;
+}
+
+.newsletter-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: var(--radius) 0 0 var(--radius);
+    outline: none;
+    font-size: 0.95rem;
+}
+
+.newsletter-btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.newsletter-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.social-link {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.social-link:hover {
+    background-color: var(--primary);
+}
+
+.copyright {
+    margin-top: 3rem;
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    gap: 0.35rem;
+}
+
+.badge-normal {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+}
+
+.badge-warning {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: var(--warning);
+}
+
+.badge-danger {
+    background-color: rgba(185, 18, 18, 0.15);
+    color: var(--danger);
+}
+
+.badge-info {
+    background-color: rgba(14, 165, 233, 0.15);
+    color: var(--info);
+}
+
+/* Data visualizations */
+.chart-container {
+    width: 100%;
+    height: 300px;
+    margin: 2rem 0;
+}
+
+.mini-chart {
+    height: 80px;
+}
+
+/* Print styles */
+@media print {
+    body {
+        background-color: white;
+    }
+    
+    .container {
+        width: 100%;
+        max-width: none;
+        padding: 0;
+    }
+    
+    .action-bar, .btn {
+        display: none !important;
+    }
+    
+    .analysis-container {
+        box-shadow: none;
+        padding: 0;
+    }
+    
+    header {
+        text-align: center;
+        border-bottom: 2px solid #333;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .summary-card {
+        background-color: white;
+        border: 1px solid #ddd;
+    }
+    
+    .key-findings {
+        background-color: white;
+        border: 1px solid #ddd;
+    }
+}
+
+/* about page css start */
+
+
+
+
+ /* :root {
+    Modern Color Palette --primary: #2563eb;
+    --primary-light: #3b82f6;
+    --primary-dark: #1d4ed8;
+    --secondary: #10b981;
+    --secondary-light: #34d399;
+    --secondary-dark: #047857;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --success: #10b981;
+    --info: #0ea5e9;
+    --background: #f8fafc;
+    --card-bg: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-light: #94a3b8;
+    --border: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --radius-sm: 0.25rem;
+    --radius: 0.5rem;
+    --radius-lg: 0.75rem;
+    --transition: all 0.2s ease;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif; */
+  }
+
+ body {
+     background-color: #ffffff;
+     color: var(--text-primary);
+     line-height: 1.6;
+     font-size: 16px;
+     background-color: azure;
+ }
+
+ .container {
+     /* max-width: 1280px; */
+     width: 100%;
+     margin: 0 auto;
+     padding: 0 1.5rem;
+     text-align: left;
+     /* background-color:#725f9d;  */
+
+ }
+
+ .header {
+     background-color: #ecf1f4;
+
+ }
+
+ /* Header and Navigation */
+
+ .login-btn {
+     margin-left: auto;
+     padding: 8px 16px;
+     background-color: #1d4ed8;
+     /* Bootstrap blue */
+     color: white;
+     text-decoration: none;
+     border-radius: 10px;
+     font-weight: bold;
+
+ }
+ .login-btn {
+    cursor: pointer;
+}
+
+
+ .login-btn:hover {
+     background-color: #1d4ed8;
+ }
+
+ header {
+     background-color: var(--card-bg);
+     box-shadow: var(--shadow);
+     position: sticky;
+     top: 0;
+     z-index: 100;
+ }
+
+ .navbar {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding: 1rem 0;
+     height: 4rem;
+ }
+
+ .logo {
+     display: flex;
+     align-items: center;
+     font-size: 1.5rem;
+     font-weight: 700;
+     color: var(--primary);
+     text-decoration: none;
+ }
+
+ .logo-icon {
+     margin-right: 0.75rem;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     width: 2.5rem;
+     height: 2.5rem;
+     /* background-color: var(--primary-light); */
+     /* background-color: ; */
+     /* color: white; */
+     color: black;
+     border-radius: var(--radius);
+ }
+
+ .medi {
+     color: #1d4ed8;
+     font-size: 30px;
+     /* background-color: #ef4444; */
+
+ }
+
+ .medicon {
+     height: 80px;
+ }
+
+ .nav-links {
+     display: flex;
+     gap: 2rem;
+     align-items: center;
+     margin-right: 50px;
+     margin-left: 300px;
+ }
+
+
+
+ .nav-link {
+     color: #000000;
+     text-decoration: none;
+     font-weight: 600;
+     transition: var(--transition);
+     padding: 0.5rem 0;
+     position: relative;
+ }
+
+ .nav-link:hover {
+     color: var(--primary);
+ }
+
+ .nav-link.active {
+     /* color: var(--primary); */
+     font-weight: 600;
+ }
+
+ .nav-link:hover {
+     color: #263956;
+     text-decoration: underline;
+ }
+
+ .nav-link.active::after {
+     content: '';
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     width: 100%;
+     height: 2px;
+     /* background-color: var(--primary); */
+     border-radius: 2px;
+ }
+
+ .user-menu {
+     display: flex;
+     align-items: center;
+     gap: 1rem;
+ }
+
+
+ .avatar {
+
+     width: 2.5rem;
+     height: 2.5rem;
+     border-radius: 50%;
+     /* background-color: var(--primary-light); */
+     /* color: white; */
+     color: rgb(255, 255, 255);
+     background-color: #1d4ed8;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     /* font-weight: 600; */
+     cursor: pointer;
+ }
+
+ .m {
+     font-family: "Poppins", sans-serif;
+     font-weight: 600;
+     font-style: normal;
+ }
+
+ .notifications {
+     position: relative;
+     cursor: pointer;
+ }
+
+ .notify {
+     color: #000000;
+ }
+
+ /* Ending of header  */
+ .about-section {
+     /* padding: 2rem; */
+     display: flex;
+     flex-wrap: wrap;
+     background-color: #fff;
+ }
+
+ .hello_user {
+     margin-top: 0%;
+     font-size: 1.5rem;
+ }
+
+ .about-text {
+     flex: 1;
+     /* padding: 1rem; */
+ }
+
+ .about-img {
+     flex: 1;
+     /* padding: 1rem; */
+ }
+
+ .about-img img {
+     max-width: 100%;
+     border-radius: 8px;
+ }
+
+ .team-section {
+     padding: 2rem;
+     background-color: #eee;
+ }
+
+ .team-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+     gap: 1.5rem;
+ }
+
+ .team-member {
+     background: white;
+     padding: 1rem;
+     border-radius: 8px;
+     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+     text-align: center;
+     transition: transform 0.3s;
+     cursor: pointer;
+ }
+
+ .team-member:hover {
+     transform: translateY(-5px);
+ }
+
+ .team-member img {
+     width: 100px;
+     height: 100px;
+     border-radius: 50%;
+     object-fit: cover;
+ }
+
+ /* Modal Styles */
+ .modal {
+     display: none;
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgba(0, 0, 0, 0.6);
+     justify-content: center;
+     align-items: center;
+     z-index: 1000;
+ }
+
+ .modal-content {
+     background: white;
+     padding: 2rem;
+     border-radius: 8px;
+     max-width: 400px;
+     text-align: center;
+ }
+
+ .close-btn {
+     background: crimson;
+     color: white;
+     padding: 0.5rem 1rem;
+     border: none;
+     border-radius: 4px;
+     cursor: pointer;
+     margin-top: 1rem;
+ }
+
+
+ /* Section  */
+ .features {
+     padding: 6rem 0;
+     /* margin-left: 30px;
+    margin-right: 60px; */
+     background-color: var(--background);
+ }
+
+ .use_medco {
+     position: absolute;
+     left: 40%;
+     right: ;
+ }
+
+
+
+ .section-title {
+     /* display: flex; */
+     /* text-align: center; */
+     margin-bottom: 4rem;
+ }
+
+ .section-title h2 {
+     font-size: 2.25rem;
+     color: var(--text-primary);
+     margin-bottom: 1rem;
+     align-items: center;
+     justify-content: center;
+ }
+
+ .section-title p {
+     color: var(--text-secondary);
+     max-width: 600px;
+     margin: 0 auto;
+     font-size: 1.1rem;
+ }
+
+ .features-grid {
+     display: grid;
+     ;
+     margin-left: 96px;
+     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+     gap: 2rem;
+     /* gap: 20px 100px; */
+     align-items: center;
+     justify-content: center;
+ }
+
+ .feature-card {
+     background-color: #e2e5e8;
+     /* border-radius: 25%; */
+     border-radius: 12%;
+     padding: 2rem;
+     /* box-shadow: var(--shadow); */
+     box-shadow: 10px 5px 5px #8a9fd8;
+     ;
+     text-align: center;
+     transition: var(--transition);
+     border: 1px solid var(--border);
+     /* height: 300px;
+    width: 430px; */
+     height: 280px;
+     width: 330px;
+
+ }
+
+ /* .feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-light);
+} */
+
+ .feature-icon {
+     width: 3rem;
+     height: 3rem;
+     /* background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%); */
+     color: white;
+     border-radius: var(--radius);
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 1.75rem;
+     margin: 0 auto 1.5rem;
+
+ }
+
+ .feature-card h3 {
+     font-size: 1.4rem;
+     margin-bottom: 1rem;
+     color: var(--text-primary);
+ }
+
+ .feature-card p {
+     color: var(--text-secondary);
+     line-height: 1.7;
+ }
+
+ /* .hero {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25vh;
+} */
+
+ .slider {
+     width: 1600px;
+     height: 800px;
+     overflow: hidden;
+     border-radius: 10px;
+     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+ }
+
+ .slides {
+     display: flex;
+     width: 100%;
+     /* 3 slides */
+     animation: slide 9s infinite;
+ }
+
+ .slide {
+     width: 100%;
+     flex-shrink: 0;
+     object-fit: fill;
+
+ }
+
+ @keyframes slide {
+     0% {
+         transform: translateX(0%);
+     }
+
+     33% {
+         transform: translateX(0%);
+     }
+
+     36% {
+         transform: translateX(-100%);
+     }
+
+     66% {
+         transform: translateX(-100%);
+     }
+
+     69% {
+         transform: translateX(-200%);
+     }
+
+     100% {
+         transform: translateX(-200%);
+     }
+ }
+
+ .modal {
+     display: none;
+     position: fixed;
+     z-index: 1000;
+     left: 0;
+     top: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgba(0, 0, 0, 0.4);
+ }
+
+ .modal-slide {
+     background: #fff;
+     width: 90%;
+     max-width: 500px;
+     height: auto;
+     padding: 2rem;
+     border-radius: 10px;
+     position: absolute;
+     right: 0;
+     top: 50%;
+     transform: translateY(-50%) translateX(100%);
+     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+     transition: transform 0.3s ease-in-out;
+ }
+
+ .modal.show .modal-slide {
+     transform: translateY(-50%) translateX(0);
+ }
+
+ .close-btn {
+     position: absolute;
+     top: 10px;
+     right: 15px;
+     font-size: 24px;
+     cursor: pointer;
+ }
+
+ /* Hover  */
+
+
+ .feature-card:hover {
+     transform: translateY(-7px);
+     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+ }
+
+ /* Footer */
+ .back {
+     margin-left: 10px;
+ }
+
+ footer {
+     background-color: #022535;
+     color: #f8fafc;
+     /* width: 100%; */
+     padding: 4rem 0 2rem;
+     margin-top: 4rem;
+     margin-left: 0px;
+     margin-right: 0px;
+ }
+
+ .footer-content {
+     width: 100%;
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+     gap: 3rem;
+ }
+
+ .footer-section h3 {
+     margin-bottom: 1.5rem;
+     font-size: 1.25rem;
+     color: white;
+ }
+
+ .footer-links {
+     list-style: none;
+ }
+
+ .footer-links li {
+     margin-bottom: 0.75rem;
+ }
+
+ .footer-links a {
+     color: #cbd5e1;
+     text-decoration: none;
+     transition: var(--transition);
+     font-size: 0.95rem;
+ }
+
+ .footer-links a:hover {
+     color: white;
+ }
+
+ .footer-newsletter p {
+     color: #cbd5e1;
+     margin-bottom: 1rem;
+     font-size: 0.95rem;
+ }
+
+ .copyright {
+     margin-top: 3rem;
+     text-align: center;
+     padding-top: 1.5rem;
+     border-top: 1px solid rgba(255, 255, 255, 0.1);
+     color: #94a3b8;
+     font-size: 0.9rem;
+ }
+
+ .khiska_do01 {
+     margin-left: 130px;
+ }
+
+ .bacck {
+     margin-left: 100px;
+ }
+
+ .back {
+     margin-left: 130px;
+ }
+
+ .backk {
+     margin-left: 100px;
+ }
+
+ .footer-links {
+     margin-left: 100px;
+ }
+
+ .container_about {
+     /* border: 5px solid  #1d4ed8; */
+     margin-left: 20px;
+     margin-right: 20px;
+     /* background-image: url('12059.jpg'); */
+
+ }
+
+ .about-section {
+     /* background-image: url('9.avif'); */
+ }
+
+ .about_medco {
+     margin-bottom: 0.7rem;
+     margin-top: 1.5rem;
+     padding-bottom: 0rem;
+     font-size: 50px;
+     font-weight: 800;
+     color: #1d4ed8;
+     font-family: 'Inter', sans-serif;
+     text-align: center;
+ }
+
+ .about_main_para {
+     margin: 2.2rem 2.2rem 0rem 2.2rem;
+     padding: 0 100px 0 100px;
+     text-align: center;
+ }
+
+ .about_second_para {
+     margin: 2.2rem;
+     padding: 0 80px 0 80px;
+     text-align: center;
+ }
+
+ .about_pre {
+     margin-bottom: 2.7rem;
+ } 
+
+ .hello_user {
+     text-align: center;
+ }
+
+ /* about page css end  */
+
+
+
+
+     </style>
+    </head>
+    <body>
+    <!-- Header -->
+    <header class="header-modern">
+        <div class="container-modern">
+            <div class="navbar-modern">
+                <!-- Logo -->
+                <div class="logo-modern">
+                    <div class="logo-icon-modern">
+                        <img src="{{ url_for('static', filename='logo.png') }}" alt="Swasthmate Logo">
+                    </div>
+                    <span class="logo-text-modern">Swasth<span class="mate-part">mate</span></span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="nav-modern">
+                    <a href="/" class="nav-link-modern">Home</a>
+                    <a href="/upload" class="nav-link-modern">Prescription Reader</a>
+                    <a href="/MedAssist" class="nav-link-modern">MedAssist</a>
+                    <a href="/about" class="nav-link-modern" onclick="window.location.href='/about'; return true;">About Us</a>
+                    <a href="/contact" class="nav-link-modern" onclick="window.location.href='/contact'; return true;">Contact</a>
+                </nav>
+
+                <!-- Right Side Actions -->
+                <div class="header-actions-modern">
+                    <div id="loginButtonContainer">
+                        <a href="/login" class="login-btn-modern">Log In / Sign up</a>
+                    </div>
+                    <div id="profileButtonContainer" class="profile-container-modern" style="display: none;">
+                        <button class="user-icon-btn" onclick="toggleProfileDropdown()">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <div class="profile-dropdown-modern" id="profileDropdownModern">
+                            <div class="profile-header-modern">
+                                <div class="profile-info-modern">
+                                    <div class="profile-avatar-modern" id="profileAvatarModern">U</div>
+                                    <div class="profile-details-modern">
+                                        <h3 id="dropdown-user-name-modern">User</h3>
+                                        <p id="dropdown-user-email-modern">user@example.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-menu-modern">
+                                <a href="#" class="profile-menu-item-modern" onclick="editProfile(); return false;">
+                                    <i class="fas fa-edit"></i>
+                                    Edit Profile
+                                </a>
+                                <button class="profile-menu-item-modern logout-modern" onclick="handleLogout()">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="menu-toggle" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+                
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <nav class="mobile-nav">
+                    <a href="/" class="mobile-nav-link" onclick="window.location.href='/'; return true;">Home</a>
+                    <a href="/upload" class="mobile-nav-link" onclick="window.location.href='/upload'; return true;">Prescription Reader</a>
+                    <a href="/MedAssist" class="mobile-nav-link" onclick="window.location.href='/MedAssist'; return true;">MedAssist</a>
+                    <a href="/about" class="mobile-nav-link" onclick="window.location.href='/about'; return true;">About Us</a>
+                    <a href="/contact" class="mobile-nav-link" onclick="window.location.href='/contact'; return true;">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+
+    <!-- Profile Modal -->
+    <section id="profile-view" style="display: none;">
+        <div class="profile-modal">
+            <button class="close-profile" onclick="closeProfile()">&times;</button>
+            <h2>My Profile</h2>
+           <form id="edit-profile-form">
+      <p><strong>Name:</strong> <input type="text" id="edit-name" required></p>
+      <p><strong>Email:</strong> <input type="email" id="edit-email" required></p>
+      <p><strong>Password:</strong> <input type="password" id="edit-password" required></p>
+      <button type="submit" class="demo-button">Save Changes</button>
+    </form>
+            
+    </section>
+
+
+ <main class="container" style="padding-top: 80px;">
+
+
+ <!-- about view start  -->
+
+
+<section id="about-view" class="active" style="display: block !important; visibility: visible !important; opacity: 1 !important;">
+      <!-- Ending of Header -->
+  <div class="container_about" style="display: block !important; visibility: visible !important;">
+  <section class="about-section" style="display: block !important; visibility: visible !important;">
+    <div class="about-text">
+      <h1 class="about_medco">ABOUT SWASTHMATE</h1>
+      <h1 class="hello_user">Hello User</h1>
+      <!-- <h3>Hello Users</h3> -->
+      <p class="about_main_para">This is our Medical Analyzer which is cutting-edge health
+        technology platform design to assist patient and healthcare
+        providers in understanding medical data effectively. </p>
+      <!--<p class="about_pre">
+         <p class="main_purpose"><b>Its main purpose is:</b> 
+          This system is designed to analyze medical reports such as blood and health checkup documents. Users can upload their reports in various formats, including PDF, JPG, or PNG. Once uploaded, the system automatically reads the report and extracts key health indicators such as Hemoglobin levels, WBC count, Platelet count, and other vital parameters. Based on these extracted values, it intelligently predicts possible health conditions like anemia, infections, or liver-related problems. This allows users to receive an instant, easy-to-understand analysis without needing to interpret complex medical terminology themselves.
+        </p>-->
+        </p> 
+      <p class="about_second_para">
+        Our Mission is to bridge the gap between complex medical information
+        and accessible healthcare guidance. Whether you’re uploading
+        prescriptions, lab reports or medical notes, Medical Analyzer extract
+        critical details, interprets potential conditions, and offers intelligent
+        health recommendations.
+        
+        We are committed to accuracy, privacy, and empowering users with the
+        information they nedd to make informed decisions about their health.
+      </p>
+
+    </div>
+    </div>
+    <!-- Section  -->
+    <section class="features">
+      <div class="section-title">
+        <h2 class="use_medco">Why Use SWASTHMATE</h2>
+        <!-- <p>Our advanced AI technology makes understanding your medical reports easier than ever.</p> -->
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3>Smart OCR Technology</h3>
+          <p>Our advanced OCR technology accurately extracts data from any lab report format.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🧠</div>
+          <h3>AI Analysis</h3>
+          <p>Get intelligent insights about your health values and what they mean for your wellbeing.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3>Track Changes</h3>
+          <p>Monitor how your health metrics change over time with trend analysis.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Secure & Private</h3>
+          <p>Your medical data is encrypted and never shared with third parties.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Access Anywhere</h3>
+          <p>Access your reports and analysis from any device, anytime.</p>
+        </div>
+
+
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3>Expert Insights</h3>
+          <p>Receive easy-to-understand explanations of complex medical terminology.</p>
+        </div>
+
+      </div>
+
+
+    <!-- End OF Section  -->
+
+
+    <section class="team-section">
+      <h2 style="text-align:center; margin-bottom:1rem;">Meet the Team</h2>
+      <div class="team-grid">
+        <div class="team-member" onclick="showModal('Alice', 'Lead Designer')">
+          <img src="{{ url_for('static', filename='ansh.jpg') }}" alt="Ansh Yadav"/>
+          <h3>Ansh Yadav</h3>
+          <p>Frontend Developer</p>
+        </div>
+        <div class="team-member" onclick="showModal('Bob', 'Senior Developer')">
+          <img src="{{ url_for('static', filename='riti.jpg') }}" alt="Riti Rai"/>
+          <h3>Riti Rai</h3>
+          <p>Backend Developer</p>
+        </div>
+      </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <h3 id="modal-name">Name</h3>
+        <p id="modal-role">Role</p>
+        <button class="close-btn" onclick="hideModal()">Close</button>
+      </div>
+    </div>
+     </section>
+    </section>
+    </section>
+
+
+</main>   
+        
+    <!-- Disclaimer -->
+    <div class="disclaimer-section-about">
+        <div class="container-disclaimer-about">
+            <div class="disclaimer-box-about">
+                <p class="disclaimer-text-about">
+                    <span class="disclaimer-icon-about">⚠️</span>
+                    <strong>Medical Disclaimer:</strong> This tool is for informational purposes only and should not replace professional medical advice. Always consult with your healthcare provider or pharmacist for medical advice and prescription verification. For emergencies, contact emergency services immediately.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-modern">
+        <div class="container-modern">
+            <div class="footer-grid-modern">
+                <!-- Brand -->
+                <div class="footer-brand">
+                    <div class="footer-logo-modern">
+                        <div class="logo-icon-modern">
+                            <img src="{{ url_for('static', filename='logo.png') }}" alt="Swasthmate Logo">
+                        </div>
+                        <span class="logo-text-modern">Swasth<span class="mate-part">mate</span></span>
+                    </div>
+                    <p class="footer-description-modern">
+                        AI-powered medical report analysis for better health insights.
+                    </p>
+                    <div class="social-links-modern">
+                        <a href="#" class="social-link-modern"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link-modern"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link-modern"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link-modern"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links-modern">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/upload">Prescription Reader</a></li>
+                        <li><a href="/MedAssist">MedAssist</a></li>
+                        <li><a href="/about">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Services -->
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul class="footer-links-modern">
+                        <li><a href="/upload">Prescription Reader</a></li>
+                        <li><a href="/MedAssist">MedAssist</a></li>
+                        <li><a href="/">Report Analysis</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-contact-modern">
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>support@medscan.ai</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+91-9005529331</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>India</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bottom Bar -->
+            <div class="footer-bottom-modern">
+                <p>© 2025 Swasthmate. All rights reserved.</p>
+                <div class="footer-legal-links-modern">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+    <script>
+        // Check if user is logged in
+        function checkLoginStatus() {
+            const userData = localStorage.getItem('userData');
+            const loginContainer = document.getElementById('loginButtonContainer');
+            const profileContainer = document.getElementById('profileButtonContainer');
+            
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    if (user.loggedIn) {
+                        if (loginContainer) loginContainer.style.display = 'none';
+                        if (profileContainer) {
+                            profileContainer.style.display = 'flex';
+                            profileContainer.style.alignItems = 'center';
+                        }
+                        
+                        const avatar = document.getElementById('profileAvatarModern');
+                        const nameEl = document.getElementById('dropdown-user-name-modern');
+                        const emailEl = document.getElementById('dropdown-user-email-modern');
+                        
+                        if (avatar) avatar.textContent = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+                        if (nameEl) nameEl.textContent = user.name || 'User';
+                        if (emailEl) emailEl.textContent = user.email || 'user@example.com';
+                    } else {
+                        if (loginContainer) loginContainer.style.display = 'block';
+                        if (profileContainer) profileContainer.style.display = 'none';
+                    }
+                } catch (e) {
+                    if (loginContainer) loginContainer.style.display = 'block';
+                    if (profileContainer) profileContainer.style.display = 'none';
+                }
+            } else {
+                if (loginContainer) loginContainer.style.display = 'block';
+                if (profileContainer) profileContainer.style.display = 'none';
+            }
+        }
+
+        function toggleProfileDropdown() {
+            const dropdown = document.getElementById('profileDropdownModern');
+            if (dropdown) dropdown.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            const profileContainer = document.getElementById('profileButtonContainer');
+            const dropdown = document.getElementById('profileDropdownModern');
+            if (profileContainer && dropdown && !profileContainer.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        function handleLogout() {
+            localStorage.removeItem('userData');
+            window.location.href = '/';
+        }
+
+        function editProfile() {
+            const userData = localStorage.getItem('userData');
+            const profileView = document.getElementById('profile-view');
+            const dropdown = document.getElementById('profileDropdownModern');
+            
+            if (dropdown) dropdown.classList.remove('active');
+            
+            if (userData) {
+                const user = JSON.parse(userData);
+                const nameInput = document.getElementById('edit-name');
+                const emailInput = document.getElementById('edit-email');
+                const passwordInput = document.getElementById('edit-password');
+                
+                if (nameInput) nameInput.value = user.name || '';
+                if (emailInput) emailInput.value = user.email || '';
+                if (passwordInput) passwordInput.value = user.password || '';
+            }
+            
+            if (profileView) {
+                profileView.style.display = 'flex';
+                profileView.classList.add('active');
+            }
+        }
+
+        function closeProfile() {
+            const profileView = document.getElementById('profile-view');
+            if (profileView) {
+                profileView.style.display = 'none';
+                profileView.classList.remove('active');
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu) menu.classList.toggle('active');
+        }
+
+        const editProfileForm = document.getElementById('edit-profile-form');
+        if (editProfileForm) {
+            editProfileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('edit-name').value;
+                const email = document.getElementById('edit-email').value;
+                const password = document.getElementById('edit-password').value;
+                
+                if (!name || !email) {
+                    alert('Please fill in name and email');
+                    return;
+                }
+                
+                const userData = localStorage.getItem('userData');
+                const existingUser = userData ? JSON.parse(userData) : {};
+                
+                const updatedUser = {
+                    name: name,
+                    email: email,
+                    password: password || existingUser.password || '',
+                    loggedIn: true
+                };
+                
+                localStorage.setItem('userData', JSON.stringify(updatedUser));
+                checkLoginStatus();
+                closeProfile();
+                alert('Profile updated successfully!');
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+        });
+    </script>
+    </body>
+    </html>
+    
